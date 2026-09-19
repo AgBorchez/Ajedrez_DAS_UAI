@@ -8,16 +8,11 @@ namespace Ajedrez_DAS
 {
     public class Jugador
     {
-		public Jugador(bool color) 
+		public Jugador(ColorAjedrez color) 
 		{
-			this.color = color;
+			this.Color = color;
 		}
-		private bool color; // 1 negro, 0 blanco 
-
-		public bool Color
-		{
-			get { return color; }
-		}
+		public readonly ColorAjedrez Color;
 
 	}
 }

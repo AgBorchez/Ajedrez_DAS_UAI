@@ -46,49 +46,53 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DelDevolverImagen.cs" />
-    <Compile Include="DelPintarCasilla.cs" />
+    <Compile Include="Color.cs" />
+    <Compile Include="Delegados\DelDevolverImagen.cs" />
+    <Compile Include="Delegados\DelPintarCasilla.cs" />
+    <Compile Include="Delegados\DelSeleccionarCasilla.cs" />
     <Compile Include="Jugador.cs" />
-    <Compile Include="Posicion.cs" />
-    <Compile Include="Piezas\Alfil.cs" />
-    <Compile Include="Piezas\Caballo.cs" />
-    <Compile Include="Casilla.cs" />
-    <Compile Include="DelAsociarCasilla.cs" />
-    <Compile Include="Form.cs">
+    <Compile Include="Posicionamiento\Movimiento.cs" />
+    <Compile Include="Posicionamiento\Posicion.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Tablero\Piezas\Alfil.cs" />
+    <Compile Include="Tablero\Piezas\Caballo.cs" />
+    <Compile Include="Tablero\Casilla.cs" />
+    <Compile Include="Delegados\DelAsociarCasilla.cs" />
+    <Compile Include="GUI\Form.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form.Designer.cs">
+    <Compile Include="GUI\Form.Designer.cs">
       <DependentUpon>Form.cs</DependentUpon>
     </Compile>
     <Compile Include="Partida.cs" />
-    <Compile Include="Piezas\Peon.cs" />
-    <Compile Include="Piezas\Pieza.cs" />
+    <Compile Include="Tablero\Piezas\Peon.cs" />
+    <Compile Include="Tablero\Piezas\Pieza.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Piezas\Reina.cs" />
-    <Compile Include="Piezas\Rey.cs" />
-    <Compile Include="Tablero.cs" />
-    <Compile Include="Piezas\Torre.cs" />
-    <Compile Include="UCcasilla.cs">
+    <Compile Include="Tablero\Piezas\Reina.cs" />
+    <Compile Include="Tablero\Piezas\Rey.cs" />
+    <Compile Include="Tablero\Tablero.cs" />
+    <Compile Include="Tablero\Piezas\Torre.cs" />
+    <Compile Include="GUI\UCcasilla.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UCcasilla.Designer.cs">
+    <Compile Include="GUI\UCcasilla.Designer.cs">
       <DependentUpon>UCcasilla.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Form.resx">
+    <Compile Include="Posicionamiento\TipoMov.cs" />
+    <EmbeddedResource Include="GUI\Form.resx">
       <DependentUpon>Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <EmbeddedResource Include="UCcasilla.resx">
+    <EmbeddedResource Include="GUI\UCcasilla.resx">
       <DependentUpon>UCcasilla.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="ClassDiagram1.cd" />
@@ -107,40 +111,40 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="Piezas\Imagenes\bb.png" />
+    <None Include="Tablero\Piezas\Imagenes\bb.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Piezas\Imagenes\bk.png" />
+    <None Include="Tablero\Piezas\Imagenes\bk.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Piezas\Imagenes\bn.png" />
+    <None Include="Tablero\Piezas\Imagenes\bn.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Piezas\Imagenes\bp.png" />
+    <None Include="Tablero\Piezas\Imagenes\bp.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Piezas\Imagenes\bq.png" />
+    <None Include="Tablero\Piezas\Imagenes\bq.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Piezas\Imagenes\br.png" />
+    <None Include="Tablero\Piezas\Imagenes\br.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Piezas\Imagenes\wb.png" />
+    <None Include="Tablero\Piezas\Imagenes\wb.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Piezas\Imagenes\wk.png" />
+    <None Include="Tablero\Piezas\Imagenes\wk.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Piezas\Imagenes\wn.png" />
+    <None Include="Tablero\Piezas\Imagenes\wn.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Piezas\Imagenes\wp.png" />
+    <None Include="Tablero\Piezas\Imagenes\wp.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Piezas\Imagenes\wq.png" />
+    <None Include="Tablero\Piezas\Imagenes\wq.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Piezas\Imagenes\wr.png" />
+    <None Include="Tablero\Piezas\Imagenes\wr.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

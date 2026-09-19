@@ -14,10 +14,12 @@ namespace Ajedrez_DAS
 {
     public partial class UCcasilla : UserControl
     {
-        public event DelEventoFront SeleccionarCasilla;
+        public event DelSeleccionarCasilla SeleccionarCasilla;
 
         private Casilla casilla;
 
+        public Casilla CasillaLogica { get { return casilla; } }
+        public Pieza PiezaCasilla { get { return casilla.PiezaEnCasilla; } }
         public UCcasilla()
         {
             InitializeComponent();
@@ -31,21 +33,25 @@ namespace Ajedrez_DAS
             this.casilla = c;
         }
 
-        public void ActualizarImagen() 
+        public void ActualizarImagen()
         {
             button1.BackgroundImageLayout = ImageLayout.Zoom;
-            if (casilla.PiezaEnCasilla == null) return;
-            bool color = casilla.PiezaEnCasilla.color;
+            if (casilla.PiezaEnCasilla == null) 
+            {
+                button1.Image = null;
+                return;
+            }
+            bool color = (casilla.PiezaEnCasilla.color == ColorAjedrez.Blanco);
             Image imgSeleccionada = null;
 
             switch (casilla.PiezaEnCasilla)
             {
-                case Peon p: imgSeleccionada = color ? Resources.bp : Resources.wp; break;
-                case Caballo c: imgSeleccionada = color ? Resources.bn : Resources.wn; break;
-                case Alfil a: imgSeleccionada = color ? Resources.bb : Resources.wb; break;
-                case Torre t: imgSeleccionada = color ? Resources.br : Resources.wr; break;
-                case Rey k: imgSeleccionada = color ? Resources.bk : Resources.wk; break;
-                case Reina q: imgSeleccionada = color ? Resources.bq : Resources.wq; break;
+                case Peon p: imgSeleccionada = color ? Resources.wp : Resources.bp; break;
+                case Caballo c: imgSeleccionada = color ? Resources.wn : Resources.bn; break;
+                case Alfil a: imgSeleccionada = color ? Resources.wb : Resources.bb; break;
+                case Torre t: imgSeleccionada = color ? Resources.wr : Resources.br; break;
+                case Rey k: imgSeleccionada = color ? Resources.wk : Resources.bk; break;
+                case Reina q: imgSeleccionada = color ? Resources.wq : Resources.bq; break;
             }
 
             if (imgSeleccionada != null)
@@ -73,10 +79,9 @@ namespace Ajedrez_DAS
         
         private void button1_Click(object sender, EventArgs e)
         {
-            if (casilla.PiezaEnCasilla != null) 
-            {
-                SeleccionarCasilla?.Invoke(casilla);
-            }
+            
+                SeleccionarCasilla?.Invoke(this);
+            
         }
 
         private Image Escalar(Image img, int ancho, int alto)
@@ -89,6 +94,11 @@ namespace Ajedrez_DAS
                 g.DrawImage(img, 0, 0, ancho, alto);
             }
             return bmp;
+        }
+
+        public bool CasillaOcupada()
+        {
+            return (casilla.PiezaEnCasilla != null);
         }
     }
 }

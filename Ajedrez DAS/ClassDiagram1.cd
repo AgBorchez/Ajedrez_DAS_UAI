@@ -1,108 +1,129 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Ajedrez_DAS.Pieza">
-    <Position X="5.25" Y="3.5" Width="1.5" />
+    <Position X="5" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
-      <FileName>Piezas\Pieza.cs</FileName>
+      <FileName>Tablero\Piezas\Pieza.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Ajedrez_DAS.Tablero">
-    <Position X="2.5" Y="0.5" Width="1.5" />
+    <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAgAAAAACAAAAAiAAAAAAAAAIAAAAEAAAgAAAAA=</HashCode>
-      <FileName>Tablero.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Ajedrez_DAS.Partida">
-    <Position X="5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AIAAEAAAAAAAAAQAMAAAAAACQCAAAgAAAAAAAAAAAAA=</HashCode>
-      <FileName>Partida.cs</FileName>
+      <HashCode>AAAAAAgAAAAACAAAAQiAAAAAAAAAIAAAAAAAAiAAAAA=</HashCode>
+      <FileName>Tablero\Tablero.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Ajedrez_DAS.Peon">
-    <Position X="3.5" Y="7.5" Width="1.5" />
+    <Position X="2.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Piezas\Peon.cs</FileName>
+      <HashCode>AAAEAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAEAAAAAQ=</HashCode>
+      <FileName>Tablero\Piezas\Peon.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Ajedrez_DAS.Caballo">
-    <Position X="5.5" Y="7.5" Width="1.5" />
+    <Position X="4.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Piezas\Caballo.cs</FileName>
+      <FileName>Tablero\Piezas\Caballo.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Ajedrez_DAS.Alfil">
-    <Position X="9.25" Y="7.5" Width="1.5" />
+    <Position X="8.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Piezas\Alfil.cs</FileName>
+      <FileName>Tablero\Piezas\Alfil.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Ajedrez_DAS.Torre">
-    <Position X="11.25" Y="7.5" Width="1.5" />
+    <Position X="10.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Piezas\Torre.cs</FileName>
+      <FileName>Tablero\Piezas\Torre.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Ajedrez_DAS.Reina">
-    <Position X="1.5" Y="7.5" Width="1.5" />
+    <Position X="0.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Piezas\Reina.cs</FileName>
+      <FileName>Tablero\Piezas\Reina.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Ajedrez_DAS.Rey">
-    <Position X="7.5" Y="7.5" Width="1.5" />
+    <Position X="6.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Piezas\Rey.cs</FileName>
+      <FileName>Tablero\Piezas\Rey.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Ajedrez_DAS.UCcasilla" Collapsed="true">
-    <Position X="7.75" Y="1.5" Width="1.5" />
+    <Position X="8.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAEAAAACAAAAAAIADgAAACAAAIAAAAAEAAAAAAAAA=</HashCode>
-      <FileName>UCcasilla.cs</FileName>
+      <HashCode>AAAAEAAACCAAAAAAIADgAAACAAIIAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>GUI\UCcasilla.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Ajedrez_DAS.Casilla">
     <Position X="7.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAQAMAAEAAA=</HashCode>
-      <FileName>Casilla.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAABgMAAEAAA=</HashCode>
+      <FileName>Tablero\Casilla.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Ajedrez_DAS.Jugador">
-    <Position X="2" Y="3.75" Width="1.5" />
+    <Position X="0.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAAAAAA=</HashCode>
       <FileName>Jugador.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Ajedrez_DAS.Partida">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAEAgAAAAAAAQAMAAAAEACACAAAgAAAAAAASAAAAA=</HashCode>
+      <FileName>Partida.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Ajedrez_DAS.TipoMov">
+    <Position X="16.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAQAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>Posicionamiento\TipoMov.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Ajedrez_DAS.ColorAjedrez">
+    <Position X="16.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAACAAAAA=</HashCode>
+      <FileName>Color.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Delegate Name="Ajedrez_DAS.DelInicializarCasilla">
-    <Position X="10" Y="4.5" Width="1.5" />
+    <Position X="12.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAABAAAACAAAAAAAAAA=</HashCode>
-      <FileName>DelAsociarCasilla.cs</FileName>
+      <FileName>Delegados\DelAsociarCasilla.cs</FileName>
     </TypeIdentifier>
   </Delegate>
-  <Delegate Name="Ajedrez_DAS.DelEventoFront">
-    <Position X="13.75" Y="4.5" Width="1.5" />
+  <Delegate Name="Ajedrez_DAS.DelActualizarImagenes">
+    <Position X="12.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>DelDevolverImagen.cs</FileName>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Delegados\DelDevolverImagen.cs</FileName>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="Ajedrez_DAS.DelPintarCasilla">
-    <Position X="12" Y="4.5" Width="1.5" />
+    <Position X="10.75" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>DelPintarCasilla.cs</FileName>
+      <FileName>Delegados\DelPintarCasilla.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="Ajedrez_DAS.DelSeleccionarCasilla">
+    <Position X="10.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Delegados\DelSeleccionarCasilla.cs</FileName>
     </TypeIdentifier>
   </Delegate>
   <Font Name="Segoe UI" Size="9" />

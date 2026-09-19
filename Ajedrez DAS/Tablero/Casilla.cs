@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using Ajedrez_DAS.Posicionamiento;
 
 namespace Ajedrez_DAS
 {
@@ -44,11 +45,17 @@ namespace Ajedrez_DAS
             }
         }
 
-        public List<List<Posicion>> CalcularMovimientos()
+        public List<List<Movimiento>> CalcularMovimientos()
 		{
-            List<List<Posicion>> movs = this.piezaEnCasilla.MovimientosPosibles(this.posicion);
+            List<List<Movimiento>> movs = this.piezaEnCasilla.MovimientosPosibles(this.posicion);
 
 			return movs;
+		}
+
+		public void MoverPieza(Casilla to)
+		{
+			to.piezaEnCasilla = this.piezaEnCasilla;
+			this.piezaEnCasilla = null;
 		}
 
 

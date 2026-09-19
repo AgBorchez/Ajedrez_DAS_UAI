@@ -5,5 +5,10 @@ using System.Text;
 
 namespace Ajedrez_DAS
 {
-    public delegate void DelEventoFront(Casilla c);
+    public enum TipoMov
+    {
+        Ataque,
+        Avance,
+        Ambos
+    }
 }

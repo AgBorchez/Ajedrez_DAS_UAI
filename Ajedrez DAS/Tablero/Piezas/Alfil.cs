@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ajedrez_DAS.Posicionamiento;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ namespace Ajedrez_DAS
 {
     public class Alfil : Pieza
     {
-        public Alfil(bool color) : base(color) 
+        public Alfil(ColorAjedrez color) : base(color) 
         {
         }
 
@@ -16,10 +17,10 @@ namespace Ajedrez_DAS
         //    return "Piezas\\Imagenes\\Ab.png";
         //}
 
-        public override List<List<Posicion>> MovimientosPosibles(Posicion p)
+        public override List<List<Movimiento>> MovimientosPosibles(Posicion p)
         {
             {
-                List<List<Posicion>> movimientosValidos = new List<List<Posicion>>();
+                List<List<Movimiento>> movimientosValidos = new List<List<Movimiento>>();
 
                 int[][] direcciones = new int[][]
                 {
@@ -33,14 +34,15 @@ namespace Ajedrez_DAS
                 {
                     int pasoFila = dir[0];
                     int pasoColumna = dir[1];
-                    List<Posicion> MovsValidosDireccion = new List<Posicion>();
+                    List<Movimiento> MovsValidosDireccion = new List<Movimiento>();
 
                     int nuevaFila = p.y + pasoFila;
                     int nuevaColumna = p.x + pasoColumna;
 
-                    while (nuevaFila >= 0 && nuevaFila < 7 && nuevaColumna >= 0 && nuevaColumna < 7)
+                    while (nuevaFila >= 0 && nuevaFila < 8 && nuevaColumna >= 0 && nuevaColumna < 8)
                     {
-                        MovsValidosDireccion.Add(new Posicion(nuevaFila, nuevaColumna));
+                        Posicion posicionDestino = new Posicion(nuevaFila, nuevaColumna);
+                        MovsValidosDireccion.Add(new Movimiento(posicionDestino, TipoMov.Ambos));
                         
                         
                         nuevaFila += pasoFila;

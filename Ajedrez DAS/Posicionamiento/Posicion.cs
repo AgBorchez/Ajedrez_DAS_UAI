@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Ajedrez_DAS
 {
-    public class Posicion
+    public struct Posicion
     {
         public Posicion(int y, int x)
         {
