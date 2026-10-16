@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Ajedrez_DAS.BE.Bishop" Collapsed="true">
+    <Position X="6.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Piezas\Bishop.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ajedrez_DAS.BE.King" Collapsed="true">
+    <Position X="8.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAgAAAAAAMAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Piezas\King.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ajedrez_DAS.BE.Knight" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Piezas\Knight.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ajedrez_DAS.BE.Pawn" Collapsed="true">
+    <Position X="4.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAACAAAIAAAAAACAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Piezas\Pawn.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ajedrez_DAS.BE.Piece" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAgAAAAAAEAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Piezas\Piece.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ajedrez_DAS.BE.Queen" Collapsed="true">
+    <Position X="10.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Piezas\Queen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ajedrez_DAS.BE.Rook" Collapsed="true">
+    <Position X="2.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAMAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Piezas\Rook.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ajedrez_DAS.BE.Player" Collapsed="true">
+    <Position X="3.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ajedrez_DAS.BE.Movement" Collapsed="true">
+    <Position X="5.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Posicionamiento\Movement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Ajedrez_DAS.BE.Position" Collapsed="true">
+    <Position X="1" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>Posicionamiento\Position.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="Ajedrez_DAS.BE.GameColor" Collapsed="true">
+    <Position X="7.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Color.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Ajedrez_DAS.BE.GameState" Collapsed="true">
+    <Position X="9.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAgAAEAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Ajedrez_DAS.BE.MovType" Collapsed="true">
+    <Position X="1" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAEAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Posicionamiento\MovType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,4 +1,4 @@
-﻿namespace Ajedrez_DAS
+﻿namespace Ajedrez_DAS.Presentacion
 {
     partial class UCcasilla
     {

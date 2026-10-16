@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ajedrez_DAS.Presentacion;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace Ajedrez_DAS
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form());
+            Application.Run(new FormTablero());
         }
     }
 }

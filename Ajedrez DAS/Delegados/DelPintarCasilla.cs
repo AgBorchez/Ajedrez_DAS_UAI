@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Ajedrez_DAS.BLL;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 
-namespace Ajedrez_DAS
+namespace Ajedrez_DAS.Presentacion
 {
-    public delegate void DelPintarCasilla(Posicion p, Color c);
+    public delegate void DelPintarCasilla(Position p, Color c);
 }
