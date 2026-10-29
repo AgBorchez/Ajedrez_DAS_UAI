@@ -48,11 +48,41 @@
   <ItemGroup>
     <Compile Include="Delegados\DelPintarCasilla.cs" />
     <Compile Include="Delegados\DelSeleccionarCasilla.cs" />
-    <Compile Include="GUI\FormTablero.cs">
+    <Compile Include="GUI\Forms\Form Games\FormGameHistory.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\FormTablero.Designer.cs">
+    <Compile Include="GUI\Forms\Form Games\FormGameHistory.Designer.cs">
+      <DependentUpon>FormGameHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Forms\Form Games\FormGames.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\Form Games\FormGames.Designer.cs">
+      <DependentUpon>FormGames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Forms\Form Credentials\FormRegisteredPlayers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\Form Credentials\FormRegisteredPlayers.Designer.cs">
+      <DependentUpon>FormRegisteredPlayers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Forms\Form Credentials\FormLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\Form Credentials\FormLogin.Designer.cs">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Forms\FormTablero.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\FormTablero.Designer.cs">
       <DependentUpon>FormTablero.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UserControls\UCLogin.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UserControls\UCLogin.Designer.cs">
+      <DependentUpon>UCLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -61,30 +91,45 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GUI\UCcasilla.cs">
+    <Compile Include="GUI\UserControls\UCSquare.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\UCcasilla.Designer.cs">
-      <DependentUpon>UCcasilla.cs</DependentUpon>
+    <Compile Include="GUI\UserControls\UCSquare.Designer.cs">
+      <DependentUpon>UCSquare.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tablero.cs">
+    <Compile Include="GUI\UserControls\UCBoard.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Tablero.Designer.cs">
-      <DependentUpon>Tablero.cs</DependentUpon>
+    <Compile Include="GUI\UserControls\UCBoard.Designer.cs">
+      <DependentUpon>UCBoard.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="GUI\FormTablero.resx">
+    <EmbeddedResource Include="GUI\Forms\Form Games\FormGameHistory.resx">
+      <DependentUpon>FormGameHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Forms\Form Games\FormGames.resx">
+      <DependentUpon>FormGames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Forms\Form Credentials\FormRegisteredPlayers.resx">
+      <DependentUpon>FormRegisteredPlayers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Forms\Form Credentials\FormLogin.resx">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Forms\FormTablero.resx">
       <DependentUpon>FormTablero.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UserControls\UCLogin.resx">
+      <DependentUpon>UCLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\UCcasilla.resx">
-      <DependentUpon>UCcasilla.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\UserControls\UCSquare.resx">
+      <DependentUpon>UCSquare.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="CD_P.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -139,9 +184,9 @@
       <Project>{66cfbccc-7307-4a33-9607-92b04691c287}</Project>
       <Name>BE BusinessEntities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BLL business logic layer\BLL business logic layer.csproj">
+    <ProjectReference Include="..\BLL business logic layer\BL business logic layer.csproj">
       <Project>{f2082016-352b-43dd-bdf2-50d9e396ce1c}</Project>
-      <Name>BLL business logic layer</Name>
+      <Name>BL business logic layer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

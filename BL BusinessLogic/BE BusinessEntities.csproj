@@ -41,25 +41,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Color.cs" />
-    <Compile Include="DelCheck.cs" />
-    <Compile Include="Delegados\DelDevolverImagen.cs" />
-    <Compile Include="GameState.cs" />
-    <Compile Include="Piezas\Bishop.cs" />
-    <Compile Include="Piezas\King.cs" />
-    <Compile Include="Piezas\Knight.cs" />
-    <Compile Include="Piezas\Pawn.cs" />
-    <Compile Include="Piezas\Piece.cs" />
-    <Compile Include="Piezas\Queen.cs" />
-    <Compile Include="Piezas\Rook.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="Posicionamiento\Movement.cs" />
-    <Compile Include="Posicionamiento\MovType.cs" />
-    <Compile Include="Posicionamiento\Position.cs" />
+    <Compile Include="BE_MovementRecord.cs" />
+    <Compile Include="Types\BE_GameColor.cs" />
+    <Compile Include="Delegates\DelCheck.cs" />
+    <Compile Include="Delegates\DelDevolverImagen.cs" />
+    <Compile Include="Game\BE_GameRecord.cs" />
+    <Compile Include="Game\BE_GameState.cs" />
+    <Compile Include="Position\BE_Movement.cs" />
+    <Compile Include="Position\BE_MovType.cs" />
+    <Compile Include="Position\BE_Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\BE_User.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="CD_BE.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

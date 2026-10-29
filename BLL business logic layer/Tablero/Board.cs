@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using Ajedrez_DAS.BE;
+using BE_BusinessEntities;
 
-namespace Ajedrez_DAS.BLL
+namespace BL_business_logic_layer
 {
-    public delegate void DelStateChanged(GameState State, GameColor Color);
+    public delegate void DelStateChanged(BE_GameState State, BE_GameColor AttackedColor);
     public delegate void DelMovement(Square from, Square to);
 
     public class Board
     {
         private Square[,] squares = new Square[8, 8];
-        private Dictionary<GameColor, Piece> kings = new Dictionary<GameColor, Piece>();
-        private Dictionary<GameColor, List<Position>> squaresUnderAtack = new Dictionary<GameColor, List<Position>>();
+        private Dictionary<BE_GameColor, Piece> kings = new Dictionary<BE_GameColor, Piece>();
+        private Dictionary<BE_GameColor, List<BE_Position>> squaresUnderAtack = new Dictionary<BE_GameColor, List<BE_Position>>();
+        private int Turn;
         public event DelStateChanged OnStateChanged;
         public event DelMovement OnMovemnt;
 
@@ -22,11 +23,12 @@ namespace Ajedrez_DAS.BLL
 
         public void InitializeBoard()
         {
+            Turn = 0;
             for (int y = 0; y < 8; y++)
             {
                 for (int x = 0; x < 8; x++)
                 {
-                    squares[y, x] = new Square(new Position(y, x));
+                    squares[y, x] = new Square(new BE_Position(y, x));
                 }
             }
 
@@ -43,32 +45,36 @@ namespace Ajedrez_DAS.BLL
 
             for (int col = 0; col < 8; col++)
             {
-                squares[0, col].SquarePiece = (Piece)Activator.CreateInstance(SpecialPieces[col], new object[] { GameColor.Black });
-                squares[1, col].SquarePiece = new Pawn(GameColor.Black);
-                squares[6, col].SquarePiece = new Pawn(GameColor.White);
-                squares[7, col].SquarePiece = (Piece)Activator.CreateInstance(SpecialPieces[col], new object[] { GameColor.White });
+                squares[0, col].SquarePiece = (Piece)Activator.CreateInstance(SpecialPieces[col], new object[] { BE_GameColor.Black });
+                squares[1, col].SquarePiece = new Pawn(BE_GameColor.Black);
+                squares[6, col].SquarePiece = new Pawn(BE_GameColor.White);
+                squares[7, col].SquarePiece = (Piece)Activator.CreateInstance(SpecialPieces[col], new object[] { BE_GameColor.White });
 
                 if (col == 4)
                 {
-                    kings.Add(GameColor.Black, squares[0, col].SquarePiece);
-                    kings.Add(GameColor.White, squares[7, col].SquarePiece);
+                    kings.Add(BE_GameColor.Black, squares[0, col].SquarePiece);
+                    kings.Add(BE_GameColor.White, squares[7, col].SquarePiece);
                 }
             }
         }
 
-        public List<Position> GetLegalMoves(Square c)
+        public List<BE_Position> GetLegalMoves(BE_Position pos, BE_GameColor gc)
         {
-            List<List<Movement>> Movs = c.Movs();
-            List<Position> pseudoLegal = new List<Position>();
+            Square s = SelectSquare(pos);
+            if (s.SquarePiece == null) return null;
+            if (s.SquarePiece.color != gc) return null;
+            
+            List<List<BE_Movement>> Movs = s.Movs();
+            List<BE_Position> pseudoLegal = new List<BE_Position>();
 
             // 1. Obtener movimientos pseudo-legales geométricos
-            foreach (List<Movement> MovLine in Movs)
+            foreach (List<BE_Movement> MovLine in Movs)
             {
-                foreach (Movement IndividualMov in MovLine)
+                foreach (BE_Movement IndividualMov in MovLine)
                 {
-                    Piece TargetSquarePiece = SelectSquare(IndividualMov).SquarePiece;
+                    Piece TargetSquarePiece = SelectSquare(IndividualMov.pos).SquarePiece;
 
-                    if (TargetSquarePiece == null && (IndividualMov.MovType == MovType.Foward || IndividualMov.MovType == MovType.Both))
+                    if (TargetSquarePiece == null && (IndividualMov.MovType == BE_MovType.Forward || IndividualMov.MovType == BE_MovType.Both))
                     {
                         pseudoLegal.Add(IndividualMov.pos);
                     }
@@ -76,8 +82,8 @@ namespace Ajedrez_DAS.BLL
                     {
                         if (TargetSquarePiece.VerifyCheck()) break;
 
-                        if (TargetSquarePiece.color != c.SquarePiece.color &&
-                           (IndividualMov.MovType == MovType.Both || IndividualMov.MovType == MovType.Attack))
+                        if (TargetSquarePiece.color != s.SquarePiece.color &&
+                           (IndividualMov.MovType == BE_MovType.Both || IndividualMov.MovType == BE_MovType.Attack))
                         {
                             pseudoLegal.Add(IndividualMov.pos);
                         }
@@ -86,17 +92,17 @@ namespace Ajedrez_DAS.BLL
                 }
             }
 
-            List<Position> LegalMovs = new List<Position>();
-            GameColor Color = c.SquarePiece.color;
+            List<BE_Position> LegalMovs = new List<BE_Position>();
+            BE_GameColor Color = s.SquarePiece.color;
 
-            foreach (Position targetPos in pseudoLegal)
+            foreach (BE_Position targetPos in pseudoLegal)
             {
-                Square targetSquare = squares[targetPos.y, targetPos.x];
+                Square targetSquare = squares[targetPos.Y, targetPos.X];
 
                 // Simular jugada
                 Piece TargetPieceAux = targetSquare.SquarePiece;
-                targetSquare.SquarePiece = c.SquarePiece;
-                c.SquarePiece = null;
+                targetSquare.SquarePiece = s.SquarePiece;
+                s.SquarePiece = null;
 
                 SquaresUnderAttack();
 
@@ -105,7 +111,7 @@ namespace Ajedrez_DAS.BLL
                     LegalMovs.Add(targetPos);
                 }
 
-                c.SquarePiece = targetSquare.SquarePiece;
+                s.SquarePiece = targetSquare.SquarePiece;
                 targetSquare.SquarePiece = TargetPieceAux;
             }
 
@@ -114,10 +120,10 @@ namespace Ajedrez_DAS.BLL
             return LegalMovs;
         }
 
-        private bool KingUnderAttack(GameColor colorRey)
+        private bool KingUnderAttack(BE_GameColor colorRey)
         {
             Piece KingPiece = kings[colorRey];
-            Position KingPos = new Position(-1, -1);
+            BE_Position KingPos = new BE_Position(-1, -1);
 
             for (int y = 0; y < 8; y++)
             {
@@ -125,89 +131,93 @@ namespace Ajedrez_DAS.BLL
                 {
                     if (squares[y, x].SquarePiece == KingPiece)
                     {
-                        KingPos = new Position(y, x);
+                        KingPos = new BE_Position(y, x);
                         break;
                     }
                 }
-                if (KingPos.x != -1) break;
+                if (KingPos.X != -1) break;
             }
 
-            GameColor RivColor = (colorRey == GameColor.White) ? GameColor.Black : GameColor.White;
-            List<Position> EnemyAttacks = squaresUnderAtack[RivColor];
+            BE_GameColor RivColor = (colorRey == BE_GameColor.White) ? BE_GameColor.Black : BE_GameColor.White;
+            List<BE_Position> EnemyAttacks = squaresUnderAtack[RivColor];
 
-            return EnemyAttacks.Exists(a => a.x == KingPos.x && a.y == KingPos.y);
+            return EnemyAttacks.Exists(a => a.X == KingPos.X && a.Y == KingPos.Y);
         }
 
-        public GameState MakeMove(Square from, Square to)
+        public BE_GameState MakeMove(BE_Position fromPos, BE_Position toPos)
         {
+            Square from = SelectSquare(fromPos);
+            Square to = SelectSquare(toPos);
+
             if (to.SquarePiece == null || (to.SquarePiece.color != from.SquarePiece.color))
             {
-                GameColor AttackerColor = from.SquarePiece.color;
-                GameColor AttackedColor = (AttackerColor == GameColor.White) ? GameColor.Black : GameColor.White;
+                BE_GameColor AttackerColor = from.SquarePiece.color;
+                BE_GameColor AttackedColor = (AttackerColor == BE_GameColor.White) ? BE_GameColor.Black : BE_GameColor.White;
 
                 from.MovePiece(to);
+                
                 SquaresUnderAttack();
 
                 OnMovemnt?.Invoke(from, to);
 
                 bool AtacckedCheck = KingUnderAttack(AttackedColor);
 
-                GameState estado = GetSideGameState(AttackedColor, AtacckedCheck);
+                BE_GameState estado = GetSideGameState(AttackedColor, AtacckedCheck);
 
                 OnStateChanged?.Invoke(estado, AttackedColor);
 
                 return estado;
             }
 
-            return GameState.InGame;
+            return BE_GameState.InGame;
         }
 
-        private Square SelectSquare(Movement m)
+        private Square SelectSquare(BE_Position pos)
         {
-            if (m.pos.y < 0 || m.pos.y >= 8 || m.pos.x < 0 || m.pos.x >= 8)
+            if (pos.Y < 0 || pos.Y >= 8 || pos.X < 0 || pos.X >= 8)
                 return null;
 
-            return squares[m.pos.y, m.pos.x];
+            return squares[pos.Y, pos.X];
         }
 
         private void SquaresUnderAttack()
         {
-            List<Position> WhiteThreat = new List<Position>();
-            List<Position> BlackThreat = new List<Position>();
+            List<BE_Position> WhiteThreat = new List<BE_Position>();
+            List<BE_Position> BlackThreat = new List<BE_Position>();
 
             foreach (Square c in squares)
             {
                 if (c.SquarePiece != null)
                 {
-                    List<Position> Threated = GetAttackedSquares(c);
+                    List<BE_Position> Threated = GetAttackedSquares(c);
 
-                    if (c.SquarePiece.color == GameColor.White)
+                    if (c.SquarePiece.color == BE_GameColor.White)
                         WhiteThreat.AddRange(Threated);
                     else
                         BlackThreat.AddRange(Threated);
                 }
             }
 
-            squaresUnderAtack[GameColor.White] = WhiteThreat;
-            squaresUnderAtack[GameColor.Black] = BlackThreat;
+            squaresUnderAtack[BE_GameColor.White] = WhiteThreat;
+            squaresUnderAtack[BE_GameColor.Black] = BlackThreat;
         }
 
-        private List<Position> GetAttackedSquares(Square c)
+        private List<BE_Position> GetAttackedSquares(Square c)
         {
-            List<Position> Attacked = new List<Position>();
-            List<List<Movement>> Lines = c.Movs();
+            List<BE_Position> Attacked = new List<BE_Position>();
+            List<List<BE_Movement>> Lines = c.Movs();
 
-            foreach (List<Movement> line in Lines)
+            foreach (List<BE_Movement> line in Lines)
             {
-                foreach (Movement mov in line)
+                foreach (BE_Movement mov in line)
                 {
-                    if (mov.pos.y < 0 || mov.pos.y >= 8 || mov.pos.x < 0 || mov.pos.x >= 8) continue;
+                    if (mov.pos.Y < 0 || mov.pos.Y >= 8 || mov.pos.X < 0 || mov.pos.X >= 8) continue;
                     
-                    if (mov.MovType == MovType.Foward) continue;
+                    if (mov.MovType == BE_MovType.Forward) continue;
 
                     Attacked.Add(mov.pos);
 
-                    if (SelectSquare(mov).SquarePiece != null)
+                    if (SelectSquare(mov.pos).SquarePiece != null)
                     {
                         break;
                     }
@@ -217,33 +227,30 @@ namespace Ajedrez_DAS.BLL
             return Attacked;
         }
 
-        public bool HasLegalMovs(GameColor colorBando)
+        public bool HasLegalMovs(BE_GameColor colorBando)
         {
             foreach (Square c in squares)
             {
-                if (c.SquarePiece != null && c.SquarePiece.color == colorBando)
+                List<BE_Position> movs = GetLegalMoves(c.Position, colorBando);
+                if (movs != null && movs.Count > 0)
                 {
-                    List<Position> movs = GetLegalMoves(c);
-                    if (movs != null && movs.Count > 0)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             return false;
         }
 
-        public GameState GetSideGameState(GameColor colorRival, bool hayJaqueDirecto)
+        public BE_GameState GetSideGameState(BE_GameColor colorRival, bool hayJaqueDirecto)
         {
             bool tieneMovs = HasLegalMovs(colorRival);
 
             if (hayJaqueDirecto)
             {
-                return tieneMovs ? GameState.Check : GameState.CheckMate;
+                return tieneMovs ? BE_GameState.Check : BE_GameState.CheckMate;
             }
             else
             {
-                return tieneMovs ? GameState.InGame : GameState.Tablas;
+                return tieneMovs ? BE_GameState.InGame : BE_GameState.Tablas;
             }
         }
     }

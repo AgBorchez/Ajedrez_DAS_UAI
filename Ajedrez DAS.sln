@@ -5,9 +5,9 @@ VisualStudioVersion = 17.14.37216.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentacion", "Ajedrez DAS\Presentacion.csproj", "{5A80A17B-C97B-4559-983E-2A3F88B76F2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL business logic layer", "BLL business logic layer\BLL business logic layer.csproj", "{F2082016-352B-43DD-BDF2-50D9E396CE1C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL business logic layer", "BLL business logic layer\BL business logic layer.csproj", "{F2082016-352B-43DD-BDF2-50D9E396CE1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL DataAccesLayer", "DAL DataAccesLayer\DAL DataAccesLayer.csproj", "{418CDBC2-3595-47A9-8C05-136ABC1A9969}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DA DataAccesLayer", "DAL DataAccesLayer\DA DataAccesLayer.csproj", "{418CDBC2-3595-47A9-8C05-136ABC1A9969}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BE BusinessEntities", "BL BusinessLogic\BE BusinessEntities.csproj", "{66CFBCCC-7307-4A33-9607-92B04691C287}"
 EndProject

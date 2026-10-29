@@ -1,4 +1,4 @@
-﻿namespace Ajedrez_DAS.Presentacion
+﻿namespace Presentacion
 {
-    public delegate void DelSeleccionarCasilla(UCcasilla c);
+    public delegate void DelSeleccionarCasilla(UCSquare c);
 }

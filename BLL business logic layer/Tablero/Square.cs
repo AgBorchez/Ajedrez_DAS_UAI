@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
-using Ajedrez_DAS.BE;
+using BE_BusinessEntities;
 
-namespace Ajedrez_DAS.BLL
+namespace BL_business_logic_layer
 {
     public class Square
     {
-		public Square(Position pos) 
+		public Square(BE_Position pos) 
 		{
 			this.position = pos; 
 		}
-		public Square(Piece p, Position pos) : this (pos)
+		public Square(Piece p, BE_Position pos) : this (pos)
 		{
 			this.pieceInSquare = p;
 		}
@@ -21,13 +21,14 @@ namespace Ajedrez_DAS.BLL
 			set { pieceInSquare = value; }
 		}
 
-		private Position position;
+		private BE_Position position;
+		public BE_Position Position { get { return position; } }
 
 		public int x
 		{
 			get
 			{
-				return position.x;
+				return position.X;
 			}
 		}
 
@@ -35,13 +36,15 @@ namespace Ajedrez_DAS.BLL
         {
             get
             {
-                return position.y;
+                return position.Y;
             }
         }
 
-        public List<List<Movement>> Movs()
+		public readonly string Notation;
+
+        public List<List<BE_Movement>> Movs()
 		{
-            List<List<Movement>> movs = this.pieceInSquare.GetPossibleMoves(position);
+            List<List<BE_Movement>> movs = this.pieceInSquare.GetPossibleMoves(position);
 
 			return movs;
 		}

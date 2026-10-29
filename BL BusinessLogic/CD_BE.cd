@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BE_BusinessEntities.BE_User">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAQgAAAAAAAAAAAACAAgAAAAAAAA=</HashCode>
+      <FileName>Types\BE_User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BE_BusinessEntities.BE_MovementRecord">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAACAAAAAAAAAAAAICAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BE_MovementRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BE_BusinessEntities.BE_Movement">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Position\BE_Movement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="BE_BusinessEntities.BE_Position">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAIAAAAAYAA=</HashCode>
+      <FileName>Position\BE_Position.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="BE_BusinessEntities.BE_GameColor">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Types\BE_GameColor.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BE_BusinessEntities.BE_GameState">
+    <Position X="2.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAgAAEAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\BE_GameState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BE_BusinessEntities.BE_MovType">
+    <Position X="4.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GAAAAAAAAAAAAAAAAgAAQAAACIAAAAAAACAAAAAAhAI=</HashCode>
+      <FileName>Position\BE_MovType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

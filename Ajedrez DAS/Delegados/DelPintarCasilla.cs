@@ -1,7 +1,7 @@
-﻿using Ajedrez_DAS.BLL;
-using System.Drawing;
+﻿using System.Drawing;
+using BE_BusinessEntities;
 
-namespace Ajedrez_DAS.Presentacion
+namespace Presentacion
 {
-    public delegate void DelPintarCasilla(Position p, Color c);
+    public delegate void DelPintarCasilla(BE_Position p, Color c);
 }

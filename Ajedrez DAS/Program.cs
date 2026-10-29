@@ -1,9 +1,11 @@
-﻿using Ajedrez_DAS.Presentacion;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BE_BusinessEntities;
+using Presentacion;
 
 namespace Ajedrez_DAS
 {
@@ -17,7 +19,16 @@ namespace Ajedrez_DAS
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormTablero());
+
+            using (FormLogin frm = new FormLogin())
+            {
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    {
+                        Application.Run(new FormTablero(frm.logedUsers));
+                    }
+                }
+            }
         }
     }
 }
