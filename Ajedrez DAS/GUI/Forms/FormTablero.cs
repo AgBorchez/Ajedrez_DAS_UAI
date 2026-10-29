@@ -59,7 +59,7 @@ namespace Presentacion
             tablero1.SetBounds(MARGEN, posY, ladoTablero, ladoTablero);
 
             // 6. Redimensionamos las 64 casillas internas
-            tablero1.RedimensionarCuadrado(ladoTablero);
+            tablero1.ResizeSquares(ladoTablero);
         }
 
         private void NextColor(BE_GameColor gc)

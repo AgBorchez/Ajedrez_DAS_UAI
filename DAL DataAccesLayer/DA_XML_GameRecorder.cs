@@ -1,7 +1,9 @@
-﻿using BE_BusinessEntities;
+﻿using Ajedrez_DAS.DAL;
+using BE_BusinessEntities;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -9,14 +11,16 @@ namespace DAL_DataAccesLayer
 {
     public class DA_XML_GameRecorder
     {
-        public void GuardarHistorialXML(int idGame, Stack<BE_MovementRecord> movimientosPila, string rutaArchivo)
+        private readonly Access _access = new Access();
+
+        public void SaveGameHistory(BE_GameRecord record)
         {
-            List<BE_MovementRecord> movimientosOrdenados = movimientosPila.Reverse().ToList();
+            List<BE_MovementRecord> movimientosOrdenados = record.History.Reverse().ToList();
 
             XDocument doc = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
                 new XElement("GameHistory",
-                    new XAttribute("IdGame", idGame),
+                    new XAttribute("IdGame", record.IdGame),
                     new XElement("Moves",
                         movimientosOrdenados.Select((m, index) => new XElement("Move",
                             new XAttribute("Turn", index + 1),
@@ -28,47 +32,70 @@ namespace DAL_DataAccesLayer
                 )
             );
 
-            doc.Save(rutaArchivo);
+            string xmlString = doc.ToString();
+
+            // Creación de parámetros usando el método de tu clase Access
+            List<SqlParameter> parametros = new List<SqlParameter>
+            {
+                _access.createParameter("@IdGame", record.IdGame),
+                _access.createParameter("@MovesHistory", xmlString)
+            };
+
+            // Ejecuta el procedimiento almacenado encargado del guardado
+            _access.Write("SP_SaveGameHistory", parametros);
         }
 
-        public List<BE_MovementRecord> LeerHistorialXML(string rutaArchivo)
+        public void LeerHistorialDB(BE_GameRecord record)
         {
-            if (!File.Exists(rutaArchivo))
-                throw new FileNotFoundException("El archivo de historial no existe.");
+            List<SqlParameter> parametros = new List<SqlParameter>
+            {
+                _access.createParameter("@IdGame", record.IdGame)
+            };
 
-            XDocument doc = XDocument.Load(rutaArchivo);
+            // ReadScalar obtiene el valor de la columna XML devuelta por el SP
+            object resultado = _access.ReadScalar("SP_GetGameHistory", parametros);
 
-            // Se leen los nodos <Move> y se ordenan por turno para asegurar la cronología
-            var movimientos = doc.Descendants("Move")
-                .Select(x => new BE_MovementRecord
-                (
+            if (resultado == null || resultado == DBNull.Value)
+            {
+                record.History = new Stack<BE_MovementRecord>();
+                return;
+            }
+
+            string xmlContent = resultado.ToString();
+
+            if (string.IsNullOrWhiteSpace(xmlContent)) 
+            { 
+                record.History = new Stack<BE_MovementRecord>();
+                return;
+            }
+
+            XDocument doc = XDocument.Parse(xmlContent);
+
+            List<BE_MovementRecord> history = doc.Descendants("Move")
+                .Select(x => new BE_MovementRecord(
                     (int)x.Attribute("Turn"),
                     (string)x.Attribute("From"),
                     (string)x.Attribute("To"),
-                    ParsearTipoMovimiento(x.Attribute("Special"))
-                    )            
-                )
+                    ParseMovType(x.Attribute("Special"))
+                ))
                 .OrderBy(m => m.Turn)
                 .ToList();
 
-            return movimientos;
+            record.History = new Stack<BE_MovementRecord>(history);
         }
 
-        private static BE_MovType ParsearTipoMovimiento(XAttribute attr)
+        private static BE_MovType ParseMovType(XAttribute attr)
         {
-            // 1. Si no existe el atributo en el XML, es un movimiento estándar
             if (attr == null || string.IsNullOrWhiteSpace(attr.Value))
             {
-                return BE_MovType.Both; // o el valor por defecto que uses
+                return BE_MovType.Both;
             }
 
-            // 2. Parseo seguro de string a Enum
             if (Enum.TryParse<BE_MovType>(attr.Value, true, out BE_MovType resultado))
             {
                 return resultado;
             }
 
-            // 3. Fallback por si hay algún valor desconocido o corrupto en el XML
             return BE_MovType.Both;
         }
     }

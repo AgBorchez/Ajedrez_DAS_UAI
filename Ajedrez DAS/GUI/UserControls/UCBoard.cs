@@ -18,8 +18,8 @@ namespace Presentacion
         private GameEngine Game = new GameEngine();
         private UCSquare[,] Squares = new UCSquare[8, 8];
         private UCSquare SelectedSquare;
-        private List<UCSquare> PosiblesMovimientos = new List<UCSquare>();
-        private UCSquare uccReyEnJaque = null;
+        private List<UCSquare> PosMovs = new List<UCSquare>();
+        private UCSquare uccCheckKing = null;
         public Action<BE_GameColor> OnNextMove;
 
         public UCBoard(List<BE_User> Players)
@@ -27,163 +27,168 @@ namespace Presentacion
             InitializeComponent();
 
             Game.AssingPlayers(Players);
-            Game.InitSquare += Inicializar_Casillas;
-            Game.UpdateImage += ActualizarImagenes;
-            Game.Board.OnStateChanged += ReaccionarEstadoPartida;
-            Game.OnNextMove += OnNextMove;
+            Game.InitSquare += InitSquares;
+            Game.OnNextMove += color => OnNextMove?.Invoke(color); ;
+            Game.OnGameStateChanged += ReactGameState;
 
             this.ClientSize = new Size(650, 650);
             Game.InitGame();
 
             foreach (UCSquare ucc in this.Controls)
             {
-                ucc.ActualizarImagen();
+                ucc.UpdateImage();
             }
         }
 
-        private void ReaccionarEstadoPartida(BE_GameState estado, BE_GameColor colorAfectado)
+        private void ReactGameState(BE_GameState state, BE_GameColor affectedColor)
         {
-            if (uccReyEnJaque != null)
+            if (uccCheckKing != null)
             {
-                uccReyEnJaque.ActualizarColorFondo();
-                uccReyEnJaque = null;
+                uccCheckKing.UpdateBackgroundColor();
+                uccCheckKing = null;
             }
 
-            if (estado == BE_GameState.Check || estado == BE_GameState.CheckMate)
+            if (state == BE_GameState.Check || state == BE_GameState.CheckMate)
             {
                 foreach (UCSquare ucc in Squares)
                 {
                     if (ucc.SquarePiece != null &&
                         ucc.SquarePiece.VerifyCheck() &&
-                        ucc.SquarePiece.color == colorAfectado)
+                        ucc.SquarePiece.color == affectedColor)
                     {
-                        uccReyEnJaque = ucc;
+                        uccCheckKing = ucc;
                         break;
                     }
                 }
 
-                if (estado == BE_GameState.Check)
+                if (state == BE_GameState.Check)
                 {
-                    uccReyEnJaque?.ActualizarColorFondo(Color.Orange);
-                    MessageBox.Show($"¡Jaque al Rey {(colorAfectado == BE_GameColor.White ? "Blanco" : "Negro")}!",
+                    uccCheckKing?.UpdateBackgroundColor(Color.Orange);
+                    MessageBox.Show($"¡Jaque al Rey {(affectedColor == BE_GameColor.White ? "Blanco" : "Negro")}!",
                                     "Aviso de Jaque", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-                else if (estado == BE_GameState.CheckMate)
+                else if (state == BE_GameState.CheckMate)
                 {
-                    uccReyEnJaque?.ActualizarColorFondo(Color.Blue);
-                    MessageBox.Show($"¡Jaque Mate! Ganan las {(colorAfectado == BE_GameColor.White ? "Negras" : "Blancas")}.",
+                    uccCheckKing?.UpdateBackgroundColor(Color.Blue);
+                    MessageBox.Show($"¡Jaque Mate! Ganan las {(affectedColor == BE_GameColor.White ? "Negras" : "Blancas")}.",
+                                    "Fin de la Partida", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (state == BE_GameState.Draw)
+                {
+                    uccCheckKing?.UpdateBackgroundColor(Color.Blue);
+                    MessageBox.Show($"¡Rey ahogado! Empate.",
                                     "Fin de la Partida", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
 
-        private void Inicializar_Casillas(Square c, int y, int x)
+        private void InitSquares(Square c, int y, int x)
         {
             UCSquare ucc = new UCSquare((((x + y) % 2 != 0)) ? Color.Beige : Color.BurlyWood, c);
-            int sizeCasilla = Math.Min(this.ClientSize.Width, this.ClientSize.Height) / 8;
+            int sizeSquare = Math.Min(this.ClientSize.Width, this.ClientSize.Height) / 8;
 
-            ucc.Location = new Point(x * sizeCasilla, y * sizeCasilla);
-            ucc.Size = new Size(sizeCasilla, sizeCasilla);
+            ucc.Location = new Point(x * sizeSquare, y * sizeSquare);
+            ucc.Size = new Size(sizeSquare, sizeSquare);
 
             Squares[y, x] = ucc;
-            ucc.SeleccionarCasilla += CasillaClickeada;
+            ucc.SelectSquare += ClickedSquare;
 
             this.Controls.Add(ucc);
         }
 
-        private void CasillaClickeada(UCSquare c)
+        private void ClickedSquare(UCSquare c)
         {
             if (c.SquarePiece == null && SelectedSquare == null) return;
             if (SelectedSquare != null)
             {
-                if (PosiblesMovimientos.Contains(c))
+                if (PosMovs.Contains(c))
                 {
-                    SeleccionMovimiento(c);
+                    SelectMove(c);
                     SelectedSquare = null;
                 }
                 else
                 {
-                    ResetearColores();
+                    ResetColors();
                     SelectedSquare = null;
                 }
             }
             else if (SelectedSquare == null && c.SquarePiece.color == Game.actualPlayer)
             {
-                NuevaSeleccion(c);
+                NewSelection(c);
             }
         }
 
-        private void ResetearColores()
+        private void ResetColors()
         {
-            if (SelectedSquare != null) SelectedSquare.ActualizarColorFondo();
+            if (SelectedSquare != null) SelectedSquare.UpdateBackgroundColor();
 
-            foreach (UCSquare ucc in PosiblesMovimientos)
+            foreach (UCSquare ucc in PosMovs)
             {
-                ucc.ActualizarColorFondo();
+                ucc.UpdateBackgroundColor();
             }
 
-            if (uccReyEnJaque != null)
+            if (uccCheckKing != null)
             {
-                if (uccReyEnJaque.SquarePiece != null && uccReyEnJaque.SquarePiece.VerifyCheck())
+                if (uccCheckKing.SquarePiece != null && uccCheckKing.SquarePiece.VerifyCheck())
                 {
-                    uccReyEnJaque.ActualizarColorFondo(Color.Orange);
+                    uccCheckKing.UpdateBackgroundColor(Color.Orange);
                 }
             }
 
-            ActualizarImagenes();
+            UpdateImage();
         }
 
-        private void NuevaSeleccion(UCSquare c)
+        private void NewSelection(UCSquare c)
         {
-            List<BE_Position> Movimientos = Game.SelectSquare(c.pos);
+            List<BE_Position> Movs = Game.SelectSquare(c.pos);
             SelectedSquare = c;
-            ResetearColores();
+            ResetColors();
 
-            if (Movimientos != null)
+            if (Movs != null)
             {
-                c.ActualizarColorFondo(Color.Yellow);
-                PosiblesMovimientos = new List<UCSquare>();
-                foreach (BE_Position mov in Movimientos)
+                c.UpdateBackgroundColor(Color.Yellow);
+                PosMovs = new List<UCSquare>();
+                foreach (BE_Position mov in Movs)
                 {
                     if (Squares[mov.Y, mov.X].CasillaOcupada())
                     {
-                        Squares[mov.Y, mov.X].ActualizarColorFondo(Color.Red);
+                        Squares[mov.Y, mov.X].UpdateBackgroundColor(Color.Red);
                     }
                     else
                     {
-                        Squares[mov.Y, mov.X].ActualizarColorFondo(Color.Cyan);
+                        Squares[mov.Y, mov.X].UpdateBackgroundColor(Color.Cyan);
                     }
 
-                    PosiblesMovimientos.Add(Squares[mov.Y, mov.X]);
+                    PosMovs.Add(Squares[mov.Y, mov.X]);
                 }
             }
         }
 
-        private void SeleccionMovimiento(UCSquare sq)
+        private void SelectMove(UCSquare sq)
         {
             if (Game.MakeMov(sq.pos))
             {
                 sq.SquarePiece = SelectedSquare.SquarePiece;
                 SelectedSquare.SquarePiece = null;
             }
-            ResetearColores();
+            ResetColors();
         }
 
-        private void ActualizarImagenes()
+        private void UpdateImage()
         {
             foreach (UCSquare ucc in this.Controls)
             {
-                ucc.ActualizarImagen();
+                ucc.UpdateImage();
             }
         }
 
-        public void RedimensionarCuadrado(int ladoTablero)
+        public void ResizeSquares(int boardSize)
         {
-            if (ladoTablero <= 0) return;
+            if (boardSize <= 0) return;
 
-            // Cada casilla mide exactamente un octavo del lado total
-            int ladoCasilla = ladoTablero / 8;
-            if (ladoCasilla <= 0) return;
+            // Each square measures exactly one-eighth of the total board size
+            int squareSize = boardSize / 8;
+            if (squareSize <= 0) return;
 
             this.SuspendLayout();
 
@@ -191,17 +196,17 @@ namespace Presentacion
             {
                 for (int x = 0; x < 8; x++)
                 {
-                    UCSquare ucc = Squares[y, x]; 
-            if (ucc != null) 
-            {
-                        // SetBounds asigna X, Y, Ancho y Alto de forma atómica y exacta
-                        ucc.SetBounds(x * ladoCasilla, y * ladoCasilla, ladoCasilla, ladoCasilla);
+                    UCSquare square = Squares[y, x];
+                    if (square != null)
+                    {
+                        // SetBounds sets X, Y, Width, and Height atomically and precisely
+                        square.SetBounds(x * squareSize, y * squareSize, squareSize, squareSize);
                     }
                 }
             }
 
             this.ResumeLayout(true);
-            ActualizarImagenes(); 
+            UpdateImage();
         }
     }
 }

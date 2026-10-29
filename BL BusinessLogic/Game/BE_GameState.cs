@@ -5,6 +5,6 @@
         InGame,
         Check,
         CheckMate,
-        Tablas
+        Draw
     }
 }

@@ -3,7 +3,7 @@
   <Class Name="BL_business_logic_layer.Board">
     <Position X="2.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAECABBAAAoAIAAAAAgAAAAAUAkAABiAAAAAABAA=</HashCode>
+      <HashCode>AAAAAECAABAAAoAIAAACAgAAAAAUAkAABiAAAAAABAA=</HashCode>
       <FileName>Tablero\Board.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -17,7 +17,7 @@
   <Class Name="BL_business_logic_layer.GameEngine">
     <Position X="0.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEgQAAAAAAgIAgAAAAQQAACBAAkBBMIgAAASAAAAA=</HashCode>
+      <HashCode>AAAEgQAAAAAAgIAgAAAAQQAAKFAAEABIIgAAAQAAAAA=</HashCode>
       <FileName>GameEngine.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -66,21 +66,28 @@
   <Class Name="BL_business_logic_layer.UserService">
     <Position X="4.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAAAAAAAAAAAAAAAAAAQAAABABAAAAAAAQAAAAAAA=</HashCode>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAQAAABABgAAAAAAQAAAAAAA=</HashCode>
       <FileName>UserService.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BL_business_logic_layer.GameService">
     <Position X="6.25" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAQAAgCAAAAAgAAAAA=</HashCode>
+      <HashCode>AAAACAEAAAAAAAAAAAIAAAAAAAAQAAAAAAAIAgAAAAA=</HashCode>
       <FileName>GameService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BL_business_logic_layer.Piece" Collapsed="true">
+    <Position X="9.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAgAAAAAAEAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Piezas\Piece.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Delegate Name="BL_business_logic_layer.DelStateChanged" Collapsed="true">
     <Position X="11.75" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAABAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>Tablero\Board.cs</FileName>
     </TypeIdentifier>
   </Delegate>

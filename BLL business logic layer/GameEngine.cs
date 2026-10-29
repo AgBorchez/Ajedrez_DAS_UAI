@@ -2,32 +2,32 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Runtime.InteropServices.WindowsRuntime;
 using BE_BusinessEntities;
+using BL_BusinessLogic;
 using DA_DataAccesLayer;
+using DAL_DataAccesLayer;
 
 namespace BL_business_logic_layer
 {
     public class GameEngine
     {
-        private Board board = new Board();
+        private readonly Board board = new Board();
         public BE_GameColor actualPlayer { get; private set; }
-        private List<BE_Position> validActualMovs;
+        private List<BE_MoveResult> validActualMovs;
         private BE_Position? selectedSquare;
         private List<BE_User> _players = null;
-        private DA_Game DB_Acces = new DA_Game();
+        private IDA_Game DB_Acces = new DA_Game();
         private BE_GameRecord record;
         private Stopwatch stopwatch = new Stopwatch();
-        public Board Board { get { return board; } }
-        public BE_GameState ActualGameState { get; private set; } = BE_GameState.InGame;
+        private BE_GameState ActualGameState = BE_GameState.InGame;
 
         public event DelInitSquare InitSquare;
-        public event DelUpdateImage UpdateImage;
-        public event Action<BE_GameState, BE_GameColor> OnGameOver;
-        public event Action OnCheck;
+        public event Action<BE_GameState, BE_GameColor> OnGameStateChanged;
         public event Action<BE_GameColor> OnNextMove;
 
-
+        public GameEngine() : this(new DA_Game()) { }
+        public GameEngine(IDA_Game db) { DB_Acces = db; }
         public void AssingPlayers(List<BE_User> players)
         {
             if (_players == null)
@@ -60,49 +60,54 @@ namespace BL_business_logic_layer
         public List<BE_Position> SelectSquare(BE_Position pos)
         {
             // Bloqueo total si el juego ya terminó: no se devuelven movimientos ni se selecciona nada
-            if (ActualGameState == BE_GameState.CheckMate || ActualGameState == BE_GameState.Tablas)
+            if (ActualGameState == BE_GameState.CheckMate || ActualGameState == BE_GameState.Draw)
             {
                 return null;
             }
 
             selectedSquare = pos;
             validActualMovs = board.GetLegalMoves(pos, actualPlayer);
-            return validActualMovs;
+
+            List<BE_Position> movs = (from v in validActualMovs select v.Position).ToList();
+            return movs;
         }
 
         public bool MakeMov(BE_Position to)
         {
             // Bloqueo total si el juego ya terminó
-            if (ActualGameState == BE_GameState.CheckMate || ActualGameState == BE_GameState.Tablas)
+            if (ActualGameState == BE_GameState.CheckMate || ActualGameState == BE_GameState.Draw)
             {
                 selectedSquare = null;
                 validActualMovs = null;
                 return false;
             }
 
-            if (validActualMovs != null && validActualMovs.Contains(new BE_Position(to.Y, to.X)))
+            var movElegido = validActualMovs?.FirstOrDefault(m => m.Position.X == to.X && m.Position.Y == to.Y);
+
+            if (movElegido != null)
             {
                 if (selectedSquare == null) return false;
-                BE_Position SelSqr = (BE_Position)selectedSquare;
+                BE_Position SelSqr = selectedSquare.Value;
 
+                record.History.Push(new BE_MovementRecord(record.History.Count + 1, SelSqr.ToNotation(), to.ToNotation(), movElegido.Value.MovType));
                 ActualGameState = board.MakeMove(SelSqr, to);
 
                 switch (ActualGameState)
                 {
                     case BE_GameState.Check:
-                        OnCheck?.Invoke();
+                        OnGameStateChanged?.Invoke(ActualGameState, (actualPlayer == BE_GameColor.White) ? BE_GameColor.Black : BE_GameColor.White);
                         nextMove();
                         return true;
 
                     case BE_GameState.CheckMate:
                         // La partida finalizó: gana el jugador que ejecutó el mate
-                        OnGameOver?.Invoke(BE_GameState.CheckMate, actualPlayer);
+                        OnGameStateChanged?.Invoke(ActualGameState, (actualPlayer == BE_GameColor.White) ? BE_GameColor.Black : BE_GameColor.White);
                         GameOver(false);
                         return false;
 
-                    case BE_GameState.Tablas:
+                    case BE_GameState.Draw:
                         // La partida finalizó en empate
-                        OnGameOver?.Invoke(BE_GameState.Tablas, actualPlayer);
+                        OnGameStateChanged?.Invoke(ActualGameState, (actualPlayer == BE_GameColor.White) ? BE_GameColor.Black : BE_GameColor.White);
                         GameOver(true);
                         return false;
 
@@ -110,11 +115,6 @@ namespace BL_business_logic_layer
                         nextMove();
                         return true;
                 }
-
-                // Limpiar selección actual tras mover o finalizar
-                selectedSquare = null;
-                validActualMovs = null;
-
             }
 
 
@@ -123,12 +123,15 @@ namespace BL_business_logic_layer
 
         private void nextMove()
         {
+            selectedSquare = null;
+            validActualMovs = null;
             actualPlayer = (actualPlayer == BE_GameColor.White) ? BE_GameColor.Black : BE_GameColor.White;
             OnNextMove?.Invoke(actualPlayer);
         }
 
         private void GameOver(bool draw)
         {
+            DA_XML_GameRecorder GameRecorder = new DA_XML_GameRecorder();
             stopwatch.Stop();
             record.Duration = record.Duration + stopwatch.Elapsed;
             if (draw)
@@ -139,6 +142,17 @@ namespace BL_business_logic_layer
             { 
                 DB_Acces.GameOverCheck(record, _players.FirstOrDefault(p => p.PlayerColor == actualPlayer).Id);
             }
+
+            GameRecorder.SaveGameHistory(record);
+        }
+
+        ~GameEngine()
+        {
+            DA_XML_GameRecorder GameRecorder = new DA_XML_GameRecorder();
+            stopwatch.Stop();
+            record.Duration = record.Duration + stopwatch.Elapsed;
+            DB_Acces.SaveGameState(record);
+            GameRecorder.SaveGameHistory(record);            
         }
     }
 }

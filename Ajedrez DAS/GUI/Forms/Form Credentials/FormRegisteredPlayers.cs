@@ -19,6 +19,7 @@ namespace Ajedrez_DAS.GUI.Forms
         {
             InitializeComponent();
 
+
             dataGridView1.DataSource = UserService.ListPlayers();
             dataGridView1.Columns["Password"].Visible = false;
             dataGridView1.Columns["PlayerColor"].Visible = false;

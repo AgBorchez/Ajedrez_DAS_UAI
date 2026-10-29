@@ -11,7 +11,7 @@
     <Position X="4.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAACAAAAAAAAAAAAICAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>BE_MovementRecord.cs</FileName>
+      <FileName>Game\BE_MovementRecord.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BE_BusinessEntities.BE_Movement">
@@ -28,6 +28,13 @@
       <FileName>Position\BE_Position.cs</FileName>
     </TypeIdentifier>
   </Struct>
+  <Struct Name="BL_BusinessLogic.BE_MoveResult">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\BE_MoveResult.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
   <Enum Name="BE_BusinessEntities.BE_GameColor">
     <Position X="0.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
@@ -38,7 +45,7 @@
   <Enum Name="BE_BusinessEntities.BE_GameState">
     <Position X="2.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAAAgAAEAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAgAAEAAAgAAAAAAAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\BE_GameState.cs</FileName>
     </TypeIdentifier>
   </Enum>

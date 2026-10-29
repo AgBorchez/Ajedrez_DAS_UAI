@@ -17,7 +17,7 @@ namespace Presentacion
 {
     public partial class UCSquare : UserControl
     {
-        public event DelSeleccionarCasilla SeleccionarCasilla;
+        public event DelSeleccionarCasilla SelectSquare;
 
         public Piece SquarePiece;
         public readonly BE_Position pos;
@@ -35,7 +35,7 @@ namespace Presentacion
             this.SquarePiece = c.SquarePiece;
         }
 
-        public void ActualizarImagen()
+        public void UpdateImage()
         {
             button1.BackgroundImageLayout = ImageLayout.Zoom;
             if (SquarePiece == null) 
@@ -64,14 +64,14 @@ namespace Presentacion
             }
 
         }
-        public void ActualizarColorFondo()
+        public void UpdateBackgroundColor()
         {
             this.button1.UseVisualStyleBackColor = false;
             this.button1.BackColor = ((pos.Y + pos.X) % 2 != 0) ? Color.Beige : Color.BurlyWood;
             this.button1.Invalidate();
             this.button1.Update();
         }
-        public void ActualizarColorFondo(Color c)
+        public void UpdateBackgroundColor(Color c)
         {
             this.button1.UseVisualStyleBackColor = false;
             this.button1.BackColor = c;
@@ -82,7 +82,7 @@ namespace Presentacion
         private void button1_Click(object sender, EventArgs e)
         {
             
-                SeleccionarCasilla?.Invoke(this);
+                SelectSquare?.Invoke(this);
             
         }
 

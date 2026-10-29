@@ -41,7 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BE_MovementRecord.cs" />
+    <Compile Include="Types\BE_MoveResult.cs" />
+    <Compile Include="Game\BE_MovementRecord.cs" />
     <Compile Include="Types\BE_GameColor.cs" />
     <Compile Include="Delegates\DelCheck.cs" />
     <Compile Include="Delegates\DelDevolverImagen.cs" />

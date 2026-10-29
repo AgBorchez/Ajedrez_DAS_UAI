@@ -9,6 +9,8 @@ namespace BE_BusinessEntities
     public class BE_GameRecord
     {
 		public BE_GameRecord() { }
+
+		
 		public BE_GameRecord(int GameId, DateTime startDate, int white, int black) 
 		{
 			this.IdGame = GameId;
@@ -17,11 +19,18 @@ namespace BE_BusinessEntities
 			this.StartDate = startDate;
 		}
 
-		public BE_GameRecord(int GameId, DateTime startDate, int white, int black, bool Draw, DateTime? Ended) 
-			: this(GameId, startDate, white, black) 
+        public BE_GameRecord(int GameId, DateTime startDate, int white, int black, Stack<BE_MovementRecord> history) : 
+			this(GameId, startDate, white, black)
+        {
+            this.History = history;
+        }
+
+        public BE_GameRecord(int GameId, DateTime startDate, int white, int black, bool Draw, DateTime? Ended, TimeSpan duration, Stack<BE_MovementRecord> history) 
+			: this(GameId, startDate, white, black, history) 
 		{
 			this.Draw = Draw;
-			this.Ended = Ended;
+			this.EndDate = Ended;
+			this.Duration = duration;
 		}
 
 		public int IdGame { get; set; }
@@ -33,9 +42,11 @@ namespace BE_BusinessEntities
         public DateTime StartDate { get; set; }
 
         public bool Draw {  get; set; }
-        public DateTime? Ended { get; set; }
+        public DateTime? EndDate { get; set; }
 
 		public TimeSpan Duration { get; set; }
+
+        public Stack<BE_MovementRecord> History {  get; set; }
 
     }
 }

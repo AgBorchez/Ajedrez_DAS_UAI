@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BE_BusinessEntities;
+using BL_BusinessLogic;
 
 namespace BL_business_logic_layer
 {
@@ -12,8 +13,6 @@ namespace BL_business_logic_layer
         private Square[,] squares = new Square[8, 8];
         private Dictionary<BE_GameColor, Piece> kings = new Dictionary<BE_GameColor, Piece>();
         private Dictionary<BE_GameColor, List<BE_Position>> squaresUnderAtack = new Dictionary<BE_GameColor, List<BE_Position>>();
-        private int Turn;
-        public event DelStateChanged OnStateChanged;
         public event DelMovement OnMovemnt;
 
         public Square[,] Squares
@@ -23,7 +22,6 @@ namespace BL_business_logic_layer
 
         public void InitializeBoard()
         {
-            Turn = 0;
             for (int y = 0; y < 8; y++)
             {
                 for (int x = 0; x < 8; x++)
@@ -58,16 +56,15 @@ namespace BL_business_logic_layer
             }
         }
 
-        public List<BE_Position> GetLegalMoves(BE_Position pos, BE_GameColor gc)
+        public List<BE_MoveResult> GetLegalMoves(BE_Position pos, BE_GameColor gc)
         {
             Square s = SelectSquare(pos);
             if (s.SquarePiece == null) return null;
             if (s.SquarePiece.color != gc) return null;
             
             List<List<BE_Movement>> Movs = s.Movs();
-            List<BE_Position> pseudoLegal = new List<BE_Position>();
+            List<BE_MoveResult> pseudoLegal = new List<BE_MoveResult>();
 
-            // 1. Obtener movimientos pseudo-legales geométricos
             foreach (List<BE_Movement> MovLine in Movs)
             {
                 foreach (BE_Movement IndividualMov in MovLine)
@@ -76,7 +73,7 @@ namespace BL_business_logic_layer
 
                     if (TargetSquarePiece == null && (IndividualMov.MovType == BE_MovType.Forward || IndividualMov.MovType == BE_MovType.Both))
                     {
-                        pseudoLegal.Add(IndividualMov.pos);
+                        pseudoLegal.Add(new BE_MoveResult(IndividualMov.pos, IndividualMov.MovType));
                     }
                     else if (TargetSquarePiece != null)
                     {
@@ -85,19 +82,19 @@ namespace BL_business_logic_layer
                         if (TargetSquarePiece.color != s.SquarePiece.color &&
                            (IndividualMov.MovType == BE_MovType.Both || IndividualMov.MovType == BE_MovType.Attack))
                         {
-                            pseudoLegal.Add(IndividualMov.pos);
+                            pseudoLegal.Add(new BE_MoveResult(IndividualMov.pos, IndividualMov.MovType));
                         }
                         break;
                     }
                 }
             }
 
-            List<BE_Position> LegalMovs = new List<BE_Position>();
+            List<BE_MoveResult> LegalMovs = new List<BE_MoveResult>();
             BE_GameColor Color = s.SquarePiece.color;
 
-            foreach (BE_Position targetPos in pseudoLegal)
+            foreach (BE_MoveResult targetPos in pseudoLegal)
             {
-                Square targetSquare = squares[targetPos.Y, targetPos.X];
+                Square targetSquare = squares[targetPos.Position.Y, targetPos.Position.X];
 
                 // Simular jugada
                 Piece TargetPieceAux = targetSquare.SquarePiece;
@@ -164,8 +161,6 @@ namespace BL_business_logic_layer
 
                 BE_GameState estado = GetSideGameState(AttackedColor, AtacckedCheck);
 
-                OnStateChanged?.Invoke(estado, AttackedColor);
-
                 return estado;
             }
 
@@ -231,7 +226,7 @@ namespace BL_business_logic_layer
         {
             foreach (Square c in squares)
             {
-                List<BE_Position> movs = GetLegalMoves(c.Position, colorBando);
+                List<BE_MoveResult> movs = GetLegalMoves(c.Position, colorBando);
                 if (movs != null && movs.Count > 0)
                 {
                     return true;
@@ -250,7 +245,7 @@ namespace BL_business_logic_layer
             }
             else
             {
-                return tieneMovs ? BE_GameState.InGame : BE_GameState.Tablas;
+                return tieneMovs ? BE_GameState.InGame : BE_GameState.Draw;
             }
         }
     }

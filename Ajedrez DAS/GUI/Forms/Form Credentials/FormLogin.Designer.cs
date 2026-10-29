@@ -153,6 +153,7 @@
             // 
             // ucLogin2
             // 
+            this.ucLogin2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ucLogin2.Location = new System.Drawing.Point(513, 117);
             this.ucLogin2.Name = "ucLogin2";
             this.ucLogin2.Size = new System.Drawing.Size(407, 165);
@@ -160,6 +161,7 @@
             // 
             // ucLogin1
             // 
+            this.ucLogin1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ucLogin1.Location = new System.Drawing.Point(12, 117);
             this.ucLogin1.Name = "ucLogin1";
             this.ucLogin1.Size = new System.Drawing.Size(407, 165);

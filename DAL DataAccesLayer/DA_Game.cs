@@ -1,5 +1,6 @@
 ﻿using Ajedrez_DAS.DAL;
 using BE_BusinessEntities;
+using DAL_DataAccesLayer;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,12 +10,14 @@ using System.Text;
 
 namespace DA_DataAccesLayer
 {
-    public class DA_Game
+    public class DA_Game : IDA_Game
     {
         private Access access = new Access();
 
         private BE_GameRecord Maper(DataRow row)
         {
+            int durationSeconds = (row["GameDuration"] != DBNull.Value) ? Convert.ToInt32(row["GameDuration"]) : 0;
+            TimeSpan duration = TimeSpan.FromSeconds(durationSeconds);
             int GameId = Convert.ToInt32(row["IDGame"]); 
             int IdWhite = Convert.ToInt32(row["IDPlayerWhites"]); 
             int IdBlack = Convert.ToInt32(row["IDPlayerBlacks"]); 
@@ -25,7 +28,7 @@ namespace DA_DataAccesLayer
 
             DateTime InitDate = Convert.ToDateTime(row["GameDate"]);
 
-            return new BE_GameRecord(GameId, InitDate, IdWhite, IdBlack, Draw, Ended);
+            return new BE_GameRecord(GameId, InitDate, IdWhite, IdBlack, Draw, Ended, duration, new Stack<BE_MovementRecord>());
         }
         public BE_GameRecord Newgame(List<BE_User> Players)
         {
@@ -57,7 +60,7 @@ namespace DA_DataAccesLayer
 
             access.Write("SP_NewGame", parameters);
 
-            return new BE_GameRecord(NewGameId, DateNow, WhitePlayer.Id, BlackPlayer.Id);
+            return new BE_GameRecord(NewGameId, DateNow, WhitePlayer.Id, BlackPlayer.Id, new Stack<BE_MovementRecord>());
         }
 
         public void GameOverCheck(BE_GameRecord gamerecord, int idWinner)
@@ -194,6 +197,16 @@ namespace DA_DataAccesLayer
             }
 
             return Games;
+        }
+
+        public void SaveGameState(BE_GameRecord gamerecord)
+        {
+            List<SqlParameter> parameters = new List<SqlParameter>{
+                access.createParameter("@IdGame", gamerecord.IdGame),
+                access.createParameter("@Duration", (int)gamerecord.Duration.TotalSeconds)
+            };
+
+            access.Write("SP_SaveGameState", parameters);
         }
 
     }

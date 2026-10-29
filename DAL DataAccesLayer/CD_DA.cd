@@ -9,9 +9,6 @@
   </Class>
   <Class Name="DA_DataAccesLayer.DA_User">
     <Position X="2.5" Y="0.5" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAAAAAQAAAAAAACAAABAACAAABgAAAAAAAAAAAAAI=</HashCode>
       <FileName>DA_User.cs</FileName>
@@ -23,13 +20,21 @@
       <HashCode>AAAAAAEAQAgAAAAAAAIAAAAgAAAAAQQAAAAICgAAAAA=</HashCode>
       <FileName>DA_Game.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="DAL_DataAccesLayer.DA_XML_GameRecorder">
     <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DA_XML_GameRecorder.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Interface Name="DAL_DataAccesLayer.IDA_Game">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAQQAAAAAAAAAAAA=</HashCode>
+      <FileName>IDA_Game.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
