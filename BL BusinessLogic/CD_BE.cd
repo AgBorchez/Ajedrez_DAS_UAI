@@ -35,6 +35,13 @@
       <FileName>Types\BE_MoveResult.cs</FileName>
     </TypeIdentifier>
   </Struct>
+  <Struct Name="BL_BusinessLogic.BE_GameResume">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BE_GameResume.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
   <Enum Name="BE_BusinessEntities.BE_GameColor">
     <Position X="0.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>

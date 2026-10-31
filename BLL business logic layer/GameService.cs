@@ -3,12 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DA_DataAccesLayer;
+using DAL_DataAccesLayer;
 
 namespace BL_business_logic_layer
 {
     public class GameService
     {
-        DA_DataAccesLayer.DA_Game DA_Game = new DA_DataAccesLayer.DA_Game();
+        DA_Game DA_Game = new DA_DataAccesLayer.DA_Game();
+        DA_XML_GameRecorder DAXML = new DA_XML_GameRecorder();
 
         public List<BE_GameRecord> ListWinnedGamesByUserId(int UserId)
         {
@@ -43,6 +46,15 @@ namespace BL_business_logic_layer
             List<BE_GameRecord> Games = DA_Game.ListALlGames();
 
             return Games;
+        }
+
+        public BE_GameRecord SearchGameById(int GameId)
+        {
+            BE_GameRecord record = DA_Game.SearchGameById(GameId);
+
+            DAXML.LeerHistorialDB(record);
+
+            return record;
         }
     }
 }

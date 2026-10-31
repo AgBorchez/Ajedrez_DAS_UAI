@@ -146,6 +146,43 @@ namespace BL_business_logic_layer
             GameRecorder.SaveGameHistory(record);
         }
 
+        public void ResumeGame(BE_GameRecord existingRecord, List<BE_User> players)
+        {
+            _players = players;
+            record = existingRecord;
+            List<BE_MovementRecord> moves = existingRecord.History.Reverse().ToList();
+
+            board.InitializeBoard();
+
+            record.History.Clear();
+
+
+            foreach (BE_MovementRecord mov in moves)
+            {
+                BE_Position from = BE_Position.FromNotation(mov.FromSquare);
+                BE_Position to = BE_Position.FromNotation(mov.ToSquare);
+
+                board.ApplyMoveDirectly(from, to);
+
+                record.History.Push(mov);
+            }
+
+            for (int y = 0; y < 8; y++)
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    InitSquare?.Invoke(board.Squares[y, x], y, x);
+                }
+            }
+
+            actualPlayer = (moves.Count % 2 == 0) ? BE_GameColor.White : BE_GameColor.Black;
+            ActualGameState = BE_GameState.InGame;
+
+            stopwatch.Restart();
+
+            OnNextMove?.Invoke(actualPlayer);
+                        
+        }
         ~GameEngine()
         {
             DA_XML_GameRecorder GameRecorder = new DA_XML_GameRecorder();

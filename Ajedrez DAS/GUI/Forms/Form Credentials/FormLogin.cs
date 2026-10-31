@@ -1,5 +1,6 @@
 ﻿using Ajedrez_DAS.GUI.Forms;
 using BE_BusinessEntities;
+using BL_BusinessLogic;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,6 +11,7 @@ namespace Ajedrez_DAS
     public partial class FormLogin : Form
     {
         public List<BE_User> logedUsers = null;
+        public BE_GameRecord GameToResume;
         public FormLogin()
         {
             InitializeComponent();
@@ -57,8 +59,8 @@ namespace Ajedrez_DAS
 
         private void buttonJugar_Click(object sender, EventArgs e)
         {
-            ucLogin1.LogedUser.SetColor(BE_GameColor.White);
-            ucLogin2.LogedUser.SetColor(BE_GameColor.Black);
+            ucLogin1.LogedUser.SetColor((pictureBoxPlayer1.BackColor == Color.White) ? BE_GameColor.White : BE_GameColor.Black);
+            ucLogin2.LogedUser.SetColor((pictureBoxPlayer2.BackColor == Color.White) ? BE_GameColor.White : BE_GameColor.Black);
 
             List<BE_User> users = new List<BE_User> 
             {
@@ -80,13 +82,29 @@ namespace Ajedrez_DAS
 
         private void button1_Click_2(object sender, EventArgs e)
         {
-            FormGameHistory frm = new FormGameHistory(true);
-            frm.ShowDialog();
+            BE_GameResume? resume = null;
+            using (FormGameHistory frm = new FormGameHistory(true)) //invoca el formulario encargado de reanudar partidas
+            {
+                frm.ShowDialog();
+
+                if(frm.DialogResult == DialogResult.OK)
+                {
+                    resume = frm.GetResume();
+                }
+                if(resume != null)
+                {
+                    ucLogin1.ResumeGame(resume.Value.WhiteP);
+                    ucLogin2.ResumeGame(resume.Value.BlackP);
+                    buttonCambiarColores.Enabled = false;
+                    GameToResume = resume.Value.gr;
+                }
+            } 
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            FormGameHistory frm = new FormGameHistory(false);
+            FormGameHistory frm = new FormGameHistory(false); //invoca un formulario que solamente muestra el historial de TODAS las partidas jugadas
             frm.ShowDialog();
         }
     }

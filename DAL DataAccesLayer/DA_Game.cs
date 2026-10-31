@@ -209,5 +209,15 @@ namespace DA_DataAccesLayer
             access.Write("SP_SaveGameState", parameters);
         }
 
+        public BE_GameRecord SearchGameById(int GameId)
+        {
+            List<SqlParameter> parameters = new List<SqlParameter>
+            {
+                access.createParameter("@GameId", GameId)
+            };
+
+            return Maper(access.Read("SP_SearchGameById", parameters).Rows[0]);
+        }
+
     }
 }

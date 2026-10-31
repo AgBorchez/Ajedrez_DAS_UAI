@@ -49,7 +49,7 @@ namespace DAL_DataAccesLayer
         {
             List<SqlParameter> parametros = new List<SqlParameter>
             {
-                _access.createParameter("@IdGame", record.IdGame)
+                _access.createParameter("@GameId", record.IdGame)
             };
 
             // ReadScalar obtiene el valor de la columna XML devuelta por el SP

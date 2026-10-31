@@ -16,12 +16,28 @@ namespace Ajedrez_DAS.GUI.Forms
     {
         private int UserId;
         private BL_business_logic_layer.GameService GameService = new BL_business_logic_layer.GameService();
-        public FormGames(int userId)
+        float AverageWins = 0;
+        TimeSpan TimePlayed = TimeSpan.Zero;
+
+        public FormGames(int userId, string username)
         {
             InitializeComponent();
+            this.Text = $"Informacion de {username}";
             this.UserId = userId;
+            List<BE_GameRecord> AllGames = GameService.ListAllGamesByUserId(userId);
 
-            FillDataGrid(GameService.ListAllGamesByUserId(userId));
+            AverageWins = GameService.ListWinnedGamesByUserId(UserId).Count();
+            AverageWins = AverageWins / AllGames.Count;
+            
+            foreach(BE_GameRecord game in AllGames)
+            {
+                TimePlayed += game.Duration;
+            }
+
+            labelAverages.Text = $"Promedio Victorias: {(int)(AverageWins*100)}%";
+            labelGameTime.Text = $"Tiempo Total de Juego: {TimePlayed}";
+
+            FillDataGrid(AllGames);
         }
 
         private void FillDataGrid(List<BE_BusinessEntities.BE_GameRecord> games)
@@ -37,6 +53,7 @@ namespace Ajedrez_DAS.GUI.Forms
             foreach (BE_GameRecord game in games)
             {
                 dataGridView1.Rows.Add(game.StartDate, game.EndDate, game.Duration, game.Draw);
+                
             }
         }
 

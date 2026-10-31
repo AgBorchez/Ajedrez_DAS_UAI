@@ -33,14 +33,16 @@
             this.radioButtonTodas = new System.Windows.Forms.RadioButton();
             this.radioButtonPerdidas = new System.Windows.Forms.RadioButton();
             this.radioButtonGanadas = new System.Windows.Forms.RadioButton();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelAverages = new System.Windows.Forms.Label();
+            this.labelGameTime = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(16, 92);
@@ -104,33 +106,33 @@
             this.radioButtonGanadas.UseVisualStyleBackColor = true;
             this.radioButtonGanadas.CheckedChanged += new System.EventHandler(this.radioButtonGanadas_CheckedChanged);
             // 
-            // label1
+            // labelAverages
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 555);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(223, 29);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Promedio Victorias:";
+            this.labelAverages.AutoSize = true;
+            this.labelAverages.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelAverages.Location = new System.Drawing.Point(12, 555);
+            this.labelAverages.Name = "labelAverages";
+            this.labelAverages.Size = new System.Drawing.Size(223, 29);
+            this.labelAverages.TabIndex = 2;
+            this.labelAverages.Text = "Promedio Victorias:";
             // 
-            // label2
+            // labelGameTime
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(13, 599);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(271, 29);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Tiempo Total de Juego:";
+            this.labelGameTime.AutoSize = true;
+            this.labelGameTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelGameTime.Location = new System.Drawing.Point(13, 599);
+            this.labelGameTime.Name = "labelGameTime";
+            this.labelGameTime.Size = new System.Drawing.Size(271, 29);
+            this.labelGameTime.TabIndex = 3;
+            this.labelGameTime.Text = "Tiempo Total de Juego:";
             // 
             // FormGames
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(697, 639);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelGameTime);
+            this.Controls.Add(this.labelAverages);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dataGridView1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -152,7 +154,7 @@
         private System.Windows.Forms.RadioButton radioButtonTodas;
         private System.Windows.Forms.RadioButton radioButtonPerdidas;
         private System.Windows.Forms.RadioButton radioButtonGanadas;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelAverages;
+        private System.Windows.Forms.Label labelGameTime;
     }
 }

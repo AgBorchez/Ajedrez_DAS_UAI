@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BE_BusinessEntities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,18 +20,24 @@ namespace Ajedrez_DAS.GUI.Forms
         {
             InitializeComponent();
 
+            dataGridView1.Columns.Add("UserId", "ID");
+            dataGridView1.Columns.Add("Name", "Nombre");
 
-            dataGridView1.DataSource = UserService.ListPlayers();
-            dataGridView1.Columns["Password"].Visible = false;
-            dataGridView1.Columns["PlayerColor"].Visible = false;
+            List<BE_User> Users = UserService.ListPlayers();
+            
+            foreach(BE_User user in Users)
+            {
+                dataGridView1.Rows.Add(user.Id, user.Username);
+            }
+
             DataGridViewButtonColumn botonColumna = new DataGridViewButtonColumn();
             botonColumna.Name = "Games";
             botonColumna.HeaderText = "Partidas";
             botonColumna.Text = "Ver Partidas"; 
             botonColumna.UseColumnTextForButtonValue = true;
-
             botonColumna.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView1.Columns.Add(botonColumna);
+            
 
         }
 
@@ -42,9 +49,10 @@ namespace Ajedrez_DAS.GUI.Forms
                 {
                     DataGridViewRow filaSeleccionada = dataGridView1.Rows[e.RowIndex];
 
-                    int PlayerId = Convert.ToInt32(filaSeleccionada.Cells["Id"].Value);
+                    int PlayerId = Convert.ToInt32(filaSeleccionada.Cells["UserId"].Value);
+                    string PlayerName = filaSeleccionada.Cells["Name"].Value.ToString();
                    
-                    FormGames frm = new FormGames(PlayerId);
+                    FormGames frm = new FormGames(PlayerId, PlayerName);
                     frm.ShowDialog();
 
                 }

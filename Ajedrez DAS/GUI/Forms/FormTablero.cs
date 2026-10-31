@@ -24,6 +24,18 @@ namespace Presentacion
             panel1.Controls.Add(tablero1);
         }
 
+        public FormTablero(List<BE_User> Players, BE_GameRecord record)
+        {
+            InitializeComponent();
+            tablero1 = new UCBoard(Players, record);
+            tablero1.OnNextMove += NextColor;
+            tablero1.Dock = DockStyle.Fill;
+
+            this.MinimumSize = new Size(500, 400);
+            this.DoubleBuffered = true;
+            panel1.Controls.Add(tablero1);
+        }
+
         private void FormTablero_Resize(object sender, EventArgs e)
         {
             AjustarProporcionTablero();

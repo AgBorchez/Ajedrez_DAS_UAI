@@ -24,8 +24,17 @@ namespace Ajedrez_DAS
             {
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
+                    if(frm.GameToResume != null)
                     {
-                        Application.Run(new FormTablero(frm.logedUsers));
+                        {
+                            Application.Run(new FormTablero(frm.logedUsers, frm.GameToResume));
+                        }
+                    }
+                    else
+                    {
+                        {
+                            Application.Run(new FormTablero(frm.logedUsers));
+                        }
                     }
                 }
             }

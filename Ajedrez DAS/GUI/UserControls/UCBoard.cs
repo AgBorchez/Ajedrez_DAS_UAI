@@ -27,12 +27,25 @@ namespace Presentacion
             InitializeComponent();
 
             Game.AssingPlayers(Players);
-            Game.InitSquare += InitSquares;
-            Game.OnNextMove += color => OnNextMove?.Invoke(color); ;
-            Game.OnGameStateChanged += ReactGameState;
+            SuscribeMetods();
 
             this.ClientSize = new Size(650, 650);
             Game.InitGame();
+
+            foreach (UCSquare ucc in this.Controls)
+            {
+                ucc.UpdateImage();
+            }
+        }
+
+        public UCBoard(List<BE_User> Players, BE_GameRecord record)
+        {
+            InitializeComponent();
+            SuscribeMetods();
+
+            Game.ResumeGame(record, Players);
+
+            this.ClientSize = new Size(650, 650);
 
             foreach (UCSquare ucc in this.Controls)
             {
@@ -186,7 +199,6 @@ namespace Presentacion
         {
             if (boardSize <= 0) return;
 
-            // Each square measures exactly one-eighth of the total board size
             int squareSize = boardSize / 8;
             if (squareSize <= 0) return;
 
@@ -199,7 +211,6 @@ namespace Presentacion
                     UCSquare square = Squares[y, x];
                     if (square != null)
                     {
-                        // SetBounds sets X, Y, Width, and Height atomically and precisely
                         square.SetBounds(x * squareSize, y * squareSize, squareSize, squareSize);
                     }
                 }
@@ -207,6 +218,13 @@ namespace Presentacion
 
             this.ResumeLayout(true);
             UpdateImage();
+        }
+
+        private void SuscribeMetods()
+        {
+            Game.InitSquare += InitSquares;
+            Game.OnNextMove += color => OnNextMove?.Invoke(color); ;
+            Game.OnGameStateChanged += ReactGameState;
         }
     }
 }

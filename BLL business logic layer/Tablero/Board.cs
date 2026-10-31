@@ -248,5 +248,13 @@ namespace BL_business_logic_layer
                 return tieneMovs ? BE_GameState.InGame : BE_GameState.Draw;
             }
         }
+
+        public void ApplyMoveDirectly(BE_Position fromPos, BE_Position toPos)
+        {
+            Square from = SelectSquare(fromPos);
+            Square to = SelectSquare(toPos);
+
+            from.MovePiece(to);
+        }
     }
 }

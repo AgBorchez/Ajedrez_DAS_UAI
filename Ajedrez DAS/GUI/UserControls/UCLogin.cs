@@ -75,5 +75,12 @@ namespace Ajedrez_DAS.GUI.UserControls
                 MessageBox.Show(ex.Message);
             }
         }
+
+        public void ResumeGame(string name)
+        {
+            this.textBox1.Text = name;
+            this.buttonRegister.Enabled = false;
+            this.textBox1.Enabled = false;
+        }
     }
 }

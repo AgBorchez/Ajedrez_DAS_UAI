@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BE_GameResume.cs" />
     <Compile Include="Types\BE_MoveResult.cs" />
     <Compile Include="Game\BE_MovementRecord.cs" />
     <Compile Include="Types\BE_GameColor.cs" />
