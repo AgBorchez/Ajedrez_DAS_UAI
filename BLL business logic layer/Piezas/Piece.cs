@@ -15,8 +15,16 @@ namespace BL_business_logic_layer
 
 		public virtual void Move()
 		{
-
+			hasMoved = true;
 		}
+
+		private bool hasMoved = false;
+
+		public bool HasMoved
+		{
+			get { return hasMoved; }
+		}
+
 
 
 		//recordatorio: todas las piezas tienen un patron de movimiento, es posible validarlo matematicamente y es responsabilidad
@@ -29,5 +37,16 @@ namespace BL_business_logic_layer
 		{
 			return false;
 		}
-	}
+
+        public virtual bool CanCastle => false;
+
+        public virtual bool EnPassant => false;
+        public virtual bool CanPromote(int targetRow) => false;
+
+		// Retorna la pieza promovida (por defecto Reina)
+		public abstract Piece Promote(BE_MovType? promotion);
+
+        // Comer al paso: solo el peón deja rastro vulnerable al mover 2 casillas
+        public virtual bool LeavesEnPassantVulnerability(int fromY, int toY) => false;
+    }
 }

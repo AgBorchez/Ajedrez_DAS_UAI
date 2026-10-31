@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BE_BusinessEntities;
+using Ajedrez_DAS.GUI.Forms.Board;
 
 namespace Presentacion
 {
@@ -140,14 +141,6 @@ namespace Presentacion
                 ucc.UpdateBackgroundColor();
             }
 
-            if (uccCheckKing != null)
-            {
-                if (uccCheckKing.SquarePiece != null && uccCheckKing.SquarePiece.VerifyCheck())
-                {
-                    uccCheckKing.UpdateBackgroundColor(Color.Orange);
-                }
-            }
-
             UpdateImage();
         }
 
@@ -179,11 +172,20 @@ namespace Presentacion
 
         private void SelectMove(UCSquare sq)
         {
-            if (Game.MakeMov(sq.pos))
+            BE_MovType? promotion = null;
+
+            BE_Position pos = sq.pos;
+            if (SelectedSquare.SquarePiece.CanPromote(pos.Y))
             {
-                sq.SquarePiece = SelectedSquare.SquarePiece;
-                SelectedSquare.SquarePiece = null;
+                using (frmPromotion frm = new frmPromotion(SelectedSquare.SquarePiece.color))
+                {
+                    frm.ShowDialog(this);
+
+                    promotion = frm.selection;
+                }
+                
             }
+            Game.MakeMov(sq.pos, promotion);
             ResetColors();
         }
 
@@ -220,11 +222,25 @@ namespace Presentacion
             UpdateImage();
         }
 
+        private void SincronizarTableroCompleto()
+        {
+            for (int y = 0; y < 8; y++)
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    // La UI le pide a la BLL la pieza para esa coordenada (sin conocer la clase Square)
+                    Squares[y, x].SquarePiece = Game.GetPieceAt(y, x);
+                    Squares[y, x].UpdateImage();
+                }
+            }
+        }
+
         private void SuscribeMetods()
         {
             Game.InitSquare += InitSquares;
             Game.OnNextMove += color => OnNextMove?.Invoke(color); ;
             Game.OnGameStateChanged += ReactGameState;
+            Game.OnBoardStateChanged += SincronizarTableroCompleto;
         }
     }
 }

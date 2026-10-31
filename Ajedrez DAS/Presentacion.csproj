@@ -48,6 +48,12 @@
   <ItemGroup>
     <Compile Include="Delegados\DelPintarCasilla.cs" />
     <Compile Include="Delegados\DelSeleccionarCasilla.cs" />
+    <Compile Include="GUI\Forms\Board\frmPromotion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\Board\frmPromotion.Designer.cs">
+      <DependentUpon>frmPromotion.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Forms\Form Games\FormGameHistory.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,10 +78,10 @@
     <Compile Include="GUI\Forms\Form Credentials\FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Forms\FormTablero.cs">
+    <Compile Include="GUI\Forms\Board\FormTablero.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\Forms\FormTablero.Designer.cs">
+    <Compile Include="GUI\Forms\Board\FormTablero.Designer.cs">
       <DependentUpon>FormTablero.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\UserControls\UCLogin.cs">
@@ -103,6 +109,9 @@
     <Compile Include="GUI\UserControls\UCBoard.Designer.cs">
       <DependentUpon>UCBoard.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="GUI\Forms\Board\frmPromotion.resx">
+      <DependentUpon>frmPromotion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Forms\Form Games\FormGameHistory.resx">
       <DependentUpon>FormGameHistory.cs</DependentUpon>
     </EmbeddedResource>
@@ -115,7 +124,7 @@
     <EmbeddedResource Include="GUI\Forms\Form Credentials\FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Forms\FormTablero.resx">
+    <EmbeddedResource Include="GUI\Forms\Board\FormTablero.resx">
       <DependentUpon>FormTablero.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\UserControls\UCLogin.resx">

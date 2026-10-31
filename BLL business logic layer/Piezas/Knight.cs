@@ -39,5 +39,10 @@ namespace BL_business_logic_layer
 
             return possibleMovs;
         }
+
+        public override Piece Promote(BE_MovType? promotion)
+        {
+            return this;
+        }
     }
 }

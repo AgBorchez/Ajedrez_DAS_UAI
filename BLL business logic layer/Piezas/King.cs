@@ -9,12 +9,7 @@ namespace BL_business_logic_layer
         {
         }
 
-        private bool castling;
-
-        public bool Castling
-        {
-            get { return castling; }
-        }
+        public override bool CanCastle => true;
 
         public override List<List<BE_Movement>> GetPossibleMoves(BE_Position p)
         {
@@ -58,12 +53,17 @@ namespace BL_business_logic_layer
 
         public override void Move()
         {
-            castling = false;
+            base.Move();
         }
 
         public override bool VerifyCheck()
         {
             return true;
+        }
+
+        public override Piece Promote(BE_MovType? promotion)
+        {
+            return this;
         }
     }
 }

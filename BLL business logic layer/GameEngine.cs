@@ -25,6 +25,7 @@ namespace BL_business_logic_layer
         public event DelInitSquare InitSquare;
         public event Action<BE_GameState, BE_GameColor> OnGameStateChanged;
         public event Action<BE_GameColor> OnNextMove;
+        public event Action OnBoardStateChanged;
 
         public GameEngine() : this(new DA_Game()) { }
         public GameEngine(IDA_Game db) { DB_Acces = db; }
@@ -68,11 +69,17 @@ namespace BL_business_logic_layer
             selectedSquare = pos;
             validActualMovs = board.GetLegalMoves(pos, actualPlayer);
 
-            List<BE_Position> movs = (from v in validActualMovs select v.Position).ToList();
-            return movs;
+            if(validActualMovs != null) 
+            {
+                List<BE_Position> movs = (from v in validActualMovs select v.Position).ToList();
+                return movs;
+            }
+
+            return null;
+            
         }
 
-        public bool MakeMov(BE_Position to)
+        public bool MakeMov(BE_Position to, BE_MovType? promotion = null)
         {
             // Bloqueo total si el juego ya terminó
             if (ActualGameState == BE_GameState.CheckMate || ActualGameState == BE_GameState.Draw)
@@ -90,7 +97,8 @@ namespace BL_business_logic_layer
                 BE_Position SelSqr = selectedSquare.Value;
 
                 record.History.Push(new BE_MovementRecord(record.History.Count + 1, SelSqr.ToNotation(), to.ToNotation(), movElegido.Value.MovType));
-                ActualGameState = board.MakeMove(SelSqr, to);
+                ActualGameState = board.MakeMove(SelSqr, to, promotion);
+                OnBoardStateChanged?.Invoke();
 
                 switch (ActualGameState)
                 {
@@ -103,15 +111,16 @@ namespace BL_business_logic_layer
                         // La partida finalizó: gana el jugador que ejecutó el mate
                         OnGameStateChanged?.Invoke(ActualGameState, (actualPlayer == BE_GameColor.White) ? BE_GameColor.Black : BE_GameColor.White);
                         GameOver(false);
-                        return false;
+                        return true;
 
                     case BE_GameState.Draw:
                         // La partida finalizó en empate
                         OnGameStateChanged?.Invoke(ActualGameState, (actualPlayer == BE_GameColor.White) ? BE_GameColor.Black : BE_GameColor.White);
                         GameOver(true);
-                        return false;
+                        return true;
 
                     case BE_GameState.InGame:
+                        OnGameStateChanged?.Invoke(ActualGameState, (actualPlayer == BE_GameColor.White) ? BE_GameColor.Black : BE_GameColor.White);
                         nextMove();
                         return true;
                 }
@@ -182,6 +191,10 @@ namespace BL_business_logic_layer
 
             OnNextMove?.Invoke(actualPlayer);
                         
+        }
+        public Piece GetPieceAt(int y, int x)
+        {
+            return board.Squares[y, x].SquarePiece;
         }
         ~GameEngine()
         {

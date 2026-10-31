@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BE_BusinessEntities;
+using System;
 
 namespace BL_business_logic_layer
 {
@@ -8,11 +9,6 @@ namespace BL_business_logic_layer
         public Pawn(BE_GameColor color) : base(color) 
         {
         }
-
-        private bool firstMove = true;
-        public bool FirstMove { get { return firstMove; } }
-
-        public void consumeFirstMove() { firstMove  = false; }
 
 
         public override List<List<BE_Movement>> GetPossibleMoves(BE_Position p)
@@ -31,7 +27,7 @@ namespace BL_business_logic_layer
             List<BE_Movement> FowardMovs = new List<BE_Movement>(2);
             FowardMovs.Add(new BE_Movement(new BE_Position(newRow, p.X), BE_MovType.Forward));
 
-            if (firstMove)
+            if (!HasMoved)
             {
                 int doubleRow = p.Y + (direction * 2);
                 if (doubleRow >= 0 && doubleRow < 8)
@@ -60,12 +56,37 @@ namespace BL_business_logic_layer
 
             return Movs;
         }
-
-        public override void Move()
+        public override bool CanPromote(int targetRow)
         {
-            firstMove = false;
+            return (color == BE_GameColor.White && targetRow == 0) ||
+                   (color == BE_GameColor.Black && targetRow == 7);
         }
 
-    
+        public override bool LeavesEnPassantVulnerability(int fromY, int toY)
+        {
+            return Math.Abs(fromY - toY) == 2;
+        }
+
+        public override bool EnPassant => true;
+
+        public override Piece Promote(BE_MovType? promotionType = BE_MovType.PromoteToQueen)
+        {
+            switch (promotionType)
+            {
+                case BE_MovType.PromoteToRook:
+                    return new Rook(this.color);
+
+                case BE_MovType.PromoteToBishop:
+                    return new Bishop(this.color);
+
+                case BE_MovType.PromoteToKnight:
+                    return new Knight(this.color);
+
+                case BE_MovType.PromoteToQueen:
+                default:
+                    return new Queen(this.color);
+            }
+        }
+
     }
 }
