@@ -45,8 +45,6 @@
     <Compile Include="Types\BE_MoveResult.cs" />
     <Compile Include="Game\BE_MovementRecord.cs" />
     <Compile Include="Types\BE_GameColor.cs" />
-    <Compile Include="Delegates\DelCheck.cs" />
-    <Compile Include="Delegates\DelDevolverImagen.cs" />
     <Compile Include="Game\BE_GameRecord.cs" />
     <Compile Include="Game\BE_GameState.cs" />
     <Compile Include="Position\BE_Movement.cs" />

@@ -1,19 +1,13 @@
 ﻿using BL_business_logic_layer;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using BE_BusinessEntities;
 using Ajedrez_DAS.GUI.Forms.Board;
 
 namespace Presentacion
 {
-    public delegate void ResizeForm(Size s);
     public partial class UCBoard : UserControl
     {
         private GameEngine Game = new GameEngine();
@@ -195,31 +189,6 @@ namespace Presentacion
             {
                 ucc.UpdateImage();
             }
-        }
-
-        public void ResizeSquares(int boardSize)
-        {
-            if (boardSize <= 0) return;
-
-            int squareSize = boardSize / 8;
-            if (squareSize <= 0) return;
-
-            this.SuspendLayout();
-
-            for (int y = 0; y < 8; y++)
-            {
-                for (int x = 0; x < 8; x++)
-                {
-                    UCSquare square = Squares[y, x];
-                    if (square != null)
-                    {
-                        square.SetBounds(x * squareSize, y * squareSize, squareSize, squareSize);
-                    }
-                }
-            }
-
-            this.ResumeLayout(true);
-            UpdateImage();
         }
 
         private void SincronizarTableroCompleto()

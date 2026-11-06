@@ -41,30 +41,30 @@ namespace Ajedrez_DAS.DAL
 
             return cmd;
         }
-        public SqlParameter createParameter(string nombre, string valor)
+        public SqlParameter createParameter(string name, string value)
         {
-            SqlParameter p = new SqlParameter(nombre, valor);
+            SqlParameter p = new SqlParameter(name, value);
             p.DbType = DbType.String;
             return p;
         }
 
-        public SqlParameter createParameter(string nombre, int valor)
+        public SqlParameter createParameter(string name, int value)
         {
-            SqlParameter p = new SqlParameter(nombre, valor);
+            SqlParameter p = new SqlParameter(name, value);
             p.DbType = DbType.Int32;
             return p;
         }
 
-        public SqlParameter createParameter(string nombre, DateTime valor)
+        public SqlParameter createParameter(string name, DateTime value)
         {
-            SqlParameter p = new SqlParameter(nombre, valor);
+            SqlParameter p = new SqlParameter(name, value);
             p.DbType = DbType.DateTime;
             return p;
         }
 
-        public SqlParameter createParameter(string nombre, bool valor)
+        public SqlParameter createParameter(string name, bool value)
         {
-            SqlParameter p = new SqlParameter(nombre, valor);
+            SqlParameter p = new SqlParameter(name, value);
             p.DbType = DbType.Boolean;
             return p;
         }

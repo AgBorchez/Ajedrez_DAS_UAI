@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using BL_business_logic_layer;
+using BE_BusinessEntities;
 
 namespace Ajedrez_DAS.GUI.UserControls
 {
@@ -19,10 +14,10 @@ namespace Ajedrez_DAS.GUI.UserControls
             InitializeComponent();
         }
 
-        BL_business_logic_layer.UserService _userBL = new BL_business_logic_layer.UserService();
-        private BE_BusinessEntities.BE_User logedUser;
+        UserService _userBL = new UserService();
+        private BE_User logedUser;
 
-        public BE_BusinessEntities.BE_User LogedUser
+        public BE_User LogedUser
         {
             get { return logedUser; }
         }
@@ -39,7 +34,7 @@ namespace Ajedrez_DAS.GUI.UserControls
                 return;
             }
 
-            BE_BusinessEntities.BE_User RegisterUser = new BE_BusinessEntities.BE_User(username, password);
+            BE_User RegisterUser = new BE_User(username, password);
 
             try
             {
@@ -63,7 +58,7 @@ namespace Ajedrez_DAS.GUI.UserControls
                 return;
             }
 
-            BE_BusinessEntities.BE_User LoginUser = new BE_BusinessEntities.BE_User(username, password);
+            BE_User LoginUser = new BE_User(username, password);
 
             try
             {

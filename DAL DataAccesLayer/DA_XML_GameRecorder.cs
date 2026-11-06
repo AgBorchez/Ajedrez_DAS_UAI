@@ -15,14 +15,14 @@ namespace DAL_DataAccesLayer
 
         public void SaveGameHistory(BE_GameRecord record)
         {
-            List<BE_MovementRecord> movimientosOrdenados = record.History.Reverse().ToList();
+            List<BE_MovementRecord> OrderedMovs = record.History.Reverse().ToList();
 
             XDocument doc = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
                 new XElement("GameHistory",
                     new XAttribute("IdGame", record.IdGame),
                     new XElement("Moves",
-                        movimientosOrdenados.Select((m, index) => new XElement("Move",
+                        OrderedMovs.Select((m, index) => new XElement("Move",
                             new XAttribute("Turn", index + 1),
                             new XAttribute("From", m.FromSquare),
                             new XAttribute("To", m.ToSquare),
@@ -35,17 +35,17 @@ namespace DAL_DataAccesLayer
             string xmlString = doc.ToString();
 
             // Creación de parámetros usando el método de tu clase Access
-            List<SqlParameter> parametros = new List<SqlParameter>
+            List<SqlParameter> parameters = new List<SqlParameter>
             {
                 _access.createParameter("@IdGame", record.IdGame),
                 _access.createParameter("@MovesHistory", xmlString)
             };
 
             // Ejecuta el procedimiento almacenado encargado del guardado
-            _access.Write("SP_SaveGameHistory", parametros);
+            _access.Write("SP_SaveGameHistory", parameters);
         }
 
-        public void LeerHistorialDB(BE_GameRecord record)
+        public void ReadHistoryDB(BE_GameRecord record)
         {
             List<SqlParameter> parametros = new List<SqlParameter>
             {
@@ -53,15 +53,15 @@ namespace DAL_DataAccesLayer
             };
 
             // ReadScalar obtiene el valor de la columna XML devuelta por el SP
-            object resultado = _access.ReadScalar("SP_GetGameHistory", parametros);
+            object history = _access.ReadScalar("SP_GetGameHistory", parametros);
 
-            if (resultado == null || resultado == DBNull.Value)
+            if (history == null || history == DBNull.Value)
             {
                 record.History = new Stack<BE_MovementRecord>();
                 return;
             }
 
-            string xmlContent = resultado.ToString();
+            string xmlContent = history.ToString();
 
             if (string.IsNullOrWhiteSpace(xmlContent)) 
             { 
@@ -71,7 +71,7 @@ namespace DAL_DataAccesLayer
 
             XDocument doc = XDocument.Parse(xmlContent);
 
-            List<BE_MovementRecord> history = doc.Descendants("Move")
+            List<BE_MovementRecord> movs = doc.Descendants("Move")
                 .Select(x => new BE_MovementRecord(
                     (int)x.Attribute("Turn"),
                     (string)x.Attribute("From"),
@@ -81,7 +81,7 @@ namespace DAL_DataAccesLayer
                 .OrderBy(m => m.Turn)
                 .ToList();
 
-            record.History = new Stack<BE_MovementRecord>(history);
+            record.History = new Stack<BE_MovementRecord>(movs);
         }
 
         private static BE_MovType ParseMovType(XAttribute attr)
@@ -91,9 +91,9 @@ namespace DAL_DataAccesLayer
                 return BE_MovType.Both;
             }
 
-            if (Enum.TryParse<BE_MovType>(attr.Value, true, out BE_MovType resultado))
+            if (Enum.TryParse<BE_MovType>(attr.Value, true, out BE_MovType outcome))
             {
-                return resultado;
+                return outcome;
             }
 
             return BE_MovType.Both;

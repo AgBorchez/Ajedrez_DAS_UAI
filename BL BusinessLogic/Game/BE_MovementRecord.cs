@@ -1,5 +1,4 @@
-﻿
-namespace BE_BusinessEntities
+﻿namespace BE_BusinessEntities
 {
     public class BE_MovementRecord
     {

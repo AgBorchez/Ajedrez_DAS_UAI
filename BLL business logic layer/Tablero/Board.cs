@@ -13,11 +13,9 @@ namespace BL_business_logic_layer
         private Square[,] squares = new Square[8, 8];
         private Dictionary<BE_GameColor, Piece> kings = new Dictionary<BE_GameColor, Piece>();
         private Dictionary<BE_GameColor, List<BE_Position>> squaresUnderAtack = new Dictionary<BE_GameColor, List<BE_Position>>();
-
+        public Square[,] Squares => squares;
         // Estado transitorio para comer al paso (casilla vacía detrás del peón que avanzó doble)
         private BE_Position? enPassantVulnerableSquare = null;
-
-        public Square[,] Squares => squares;
 
         public void InitializeBoard()
         {
@@ -96,7 +94,7 @@ namespace BL_business_logic_layer
             // 2. Agregar Comer al Paso
             if (s.SquarePiece.EnPassant)
             {
-                AgregarMovimientosAlPaso(s, pseudoLegal);
+                addEnPassantMovs(s, pseudoLegal);
             }
 
             // 3. Agregar Enroques 
@@ -114,19 +112,19 @@ namespace BL_business_logic_layer
                 Square targetSquare = squares[targetPos.Position.Y, targetPos.Position.X];
 
                 // Simular jugada (considerando captura lateral en caso de comer al paso)
-                bool esAlPaso = (s.SquarePiece is Pawn) && enPassantVulnerableSquare.HasValue &&
+                bool isEnPassant = (s.SquarePiece is Pawn) && enPassantVulnerableSquare.HasValue &&
                                 targetPos.Position.X == enPassantVulnerableSquare.Value.X &&
                                 targetPos.Position.Y == enPassantVulnerableSquare.Value.Y;
 
-                Square peonAlPasoCasilla = null;
-                Piece peonAlPasoCapturado = null;
+                Square pawnEnPassantSquare = null;
+                Piece pawnEnPassantCaptured = null;
 
-                if (esAlPaso)
+                if (isEnPassant)
                 {
                     int enemyY = (Color == BE_GameColor.White) ? targetPos.Position.Y + 1 : targetPos.Position.Y - 1;
-                    peonAlPasoCasilla = squares[enemyY, targetPos.Position.X];
-                    peonAlPasoCapturado = peonAlPasoCasilla.SquarePiece;
-                    peonAlPasoCasilla.SquarePiece = null;
+                    pawnEnPassantSquare = squares[enemyY, targetPos.Position.X];
+                    pawnEnPassantCaptured = pawnEnPassantSquare.SquarePiece;
+                    pawnEnPassantSquare.SquarePiece = null;
                 }
 
                 Piece TargetPieceAux = targetSquare.SquarePiece;
@@ -144,9 +142,9 @@ namespace BL_business_logic_layer
                 s.SquarePiece = targetSquare.SquarePiece;
                 targetSquare.SquarePiece = TargetPieceAux;
 
-                if (esAlPaso && peonAlPasoCasilla != null)
+                if (isEnPassant && pawnEnPassantSquare != null)
                 {
-                    peonAlPasoCasilla.SquarePiece = peonAlPasoCapturado;
+                    pawnEnPassantSquare.SquarePiece = pawnEnPassantCaptured;
                 }
             }
 
@@ -155,7 +153,7 @@ namespace BL_business_logic_layer
             return LegalMovs;
         }
 
-        private void AgregarMovimientosAlPaso(Square s, List<BE_MoveResult> pseudoLegal)
+        private void addEnPassantMovs(Square s, List<BE_MoveResult> pseudoLegal)
         {
             if (!enPassantVulnerableSquare.HasValue) return;
 

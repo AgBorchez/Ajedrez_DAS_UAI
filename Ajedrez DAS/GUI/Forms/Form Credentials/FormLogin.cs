@@ -37,8 +37,8 @@ namespace Ajedrez_DAS
             }
             if(ucLogin1.LogedUser != null && ucLogin2.LogedUser != null)
             {
-                buttonCambiarColores.Visible = true;
-                buttonJugar.Visible = true;
+                buttonChangeColors.Visible = true;
+                buttonPlay.Visible = true;
             }
             
         }
@@ -95,7 +95,7 @@ namespace Ajedrez_DAS
                 {
                     ucLogin1.ResumeGame(resume.Value.WhiteP);
                     ucLogin2.ResumeGame(resume.Value.BlackP);
-                    buttonCambiarColores.Enabled = false;
+                    buttonChangeColors.Enabled = false;
                     GameToResume = resume.Value.gr;
                 }
             } 

@@ -52,7 +52,7 @@ namespace BL_business_logic_layer
         {
             BE_GameRecord record = DA_Game.SearchGameById(GameId);
 
-            DAXML.LeerHistorialDB(record);
+            DAXML.ReadHistoryDB(record);
 
             return record;
         }

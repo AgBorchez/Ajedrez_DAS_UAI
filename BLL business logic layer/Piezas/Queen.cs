@@ -29,7 +29,7 @@ namespace BL_business_logic_layer
             {
                 int RowMov = dir[0];
                 int ColMov = dir[1];
-                List<BE_Movement> rayo = new List<BE_Movement>();
+                List<BE_Movement> ray = new List<BE_Movement>();
 
                 int NewRow = p.Y + RowMov;
                 int NewCol = p.X + ColMov;
@@ -38,12 +38,12 @@ namespace BL_business_logic_layer
                 {
 
                     BE_Position posicionDestino = new BE_Position(NewRow, NewCol);
-                    rayo.Add(new BE_Movement(posicionDestino, BE_MovType.Both));
+                    ray.Add(new BE_Movement(posicionDestino, BE_MovType.Both));
                     NewRow += RowMov;
                     NewCol += ColMov;
                 }
 
-                PosibleMovs.Add(rayo);
+                PosibleMovs.Add(ray);
             }
 
             return PosibleMovs;

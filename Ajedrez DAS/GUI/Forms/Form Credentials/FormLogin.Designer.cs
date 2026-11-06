@@ -30,8 +30,8 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.buttonCambiarColores = new System.Windows.Forms.Button();
-            this.buttonJugar = new System.Windows.Forms.Button();
+            this.buttonChangeColors = new System.Windows.Forms.Button();
+            this.buttonPlay = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.pictureBoxPlayer2 = new System.Windows.Forms.PictureBox();
             this.pictureBoxPlayer1 = new System.Windows.Forms.PictureBox();
@@ -68,27 +68,27 @@
             // 
             // buttonCambiarColores
             // 
-            this.buttonCambiarColores.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonCambiarColores.Location = new System.Drawing.Point(389, 355);
-            this.buttonCambiarColores.Name = "buttonCambiarColores";
-            this.buttonCambiarColores.Size = new System.Drawing.Size(143, 50);
-            this.buttonCambiarColores.TabIndex = 7;
-            this.buttonCambiarColores.Text = "Cambiar Colores";
-            this.buttonCambiarColores.UseVisualStyleBackColor = true;
-            this.buttonCambiarColores.Visible = false;
-            this.buttonCambiarColores.Click += new System.EventHandler(this.button1_Click);
+            this.buttonChangeColors.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonChangeColors.Location = new System.Drawing.Point(389, 355);
+            this.buttonChangeColors.Name = "buttonCambiarColores";
+            this.buttonChangeColors.Size = new System.Drawing.Size(143, 50);
+            this.buttonChangeColors.TabIndex = 7;
+            this.buttonChangeColors.Text = "Cambiar Colores";
+            this.buttonChangeColors.UseVisualStyleBackColor = true;
+            this.buttonChangeColors.Visible = false;
+            this.buttonChangeColors.Click += new System.EventHandler(this.button1_Click);
             // 
             // buttonJugar
             // 
-            this.buttonJugar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonJugar.Location = new System.Drawing.Point(389, 422);
-            this.buttonJugar.Name = "buttonJugar";
-            this.buttonJugar.Size = new System.Drawing.Size(143, 50);
-            this.buttonJugar.TabIndex = 8;
-            this.buttonJugar.Text = "Jugar";
-            this.buttonJugar.UseVisualStyleBackColor = true;
-            this.buttonJugar.Visible = false;
-            this.buttonJugar.Click += new System.EventHandler(this.buttonJugar_Click);
+            this.buttonPlay.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonPlay.Location = new System.Drawing.Point(389, 422);
+            this.buttonPlay.Name = "buttonJugar";
+            this.buttonPlay.Size = new System.Drawing.Size(143, 50);
+            this.buttonPlay.TabIndex = 8;
+            this.buttonPlay.Text = "Jugar";
+            this.buttonPlay.UseVisualStyleBackColor = true;
+            this.buttonPlay.Visible = false;
+            this.buttonPlay.Click += new System.EventHandler(this.buttonJugar_Click);
             // 
             // flowLayoutPanel1
             // 
@@ -175,8 +175,8 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.BtnRegisteredPlayers);
-            this.Controls.Add(this.buttonJugar);
-            this.Controls.Add(this.buttonCambiarColores);
+            this.Controls.Add(this.buttonPlay);
+            this.Controls.Add(this.buttonChangeColors);
             this.Controls.Add(this.pictureBoxPlayer2);
             this.Controls.Add(this.pictureBoxPlayer1);
             this.Controls.Add(this.label2);
@@ -200,8 +200,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBoxPlayer1;
         private System.Windows.Forms.PictureBox pictureBoxPlayer2;
-        private System.Windows.Forms.Button buttonCambiarColores;
-        private System.Windows.Forms.Button buttonJugar;
+        private System.Windows.Forms.Button buttonChangeColors;
+        private System.Windows.Forms.Button buttonPlay;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button BtnRegisteredPlayers;
         private System.Windows.Forms.Button button1;
